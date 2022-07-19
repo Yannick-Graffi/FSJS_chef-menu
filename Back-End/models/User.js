@@ -15,10 +15,11 @@ const UserSchema = mongoose.Schema({
         type: String,
         min: 8,
     },
-    date:{
+    createdDate:{
         type: Date,
         value: Date.now(),
     }
 })
+
 const User = mongoose.model('user', UserSchema)
 module.exports = User
