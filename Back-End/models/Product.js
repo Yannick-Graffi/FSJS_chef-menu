@@ -13,7 +13,7 @@ const ProductSchema = mongoose.Schema({
         },
         TTC:{
             type: Number,
-            value: this.HT * (1+this.TVA),
+            value: () => this.HT * (1+this.TVA),
         },
     },
 })

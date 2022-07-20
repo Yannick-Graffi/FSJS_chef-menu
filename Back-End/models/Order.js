@@ -10,5 +10,5 @@ const OrderSchema = mongoose.Schema({
     }
 })
 
-const Restaurant = mongoose.model('restaurant', RestaurantSchema)
-module.exports = Restaurant
+const Order = mongoose.model('order', OrderSchema)
+module.exports = Order
