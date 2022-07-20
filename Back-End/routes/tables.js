@@ -4,7 +4,7 @@ const tableController = require('../controllers/tableController')
 
 router.get('/', tableController.getTables);
 router.post('/', tableController.postTable);
-router.put('/:id', tableController.updateTable);
-router.delete('/:id', tableController.deleteTable);
+router.put('/:numero', tableController.updateTable);
+router.delete('/:numero', tableController.deleteTable);
 
 module.exports = router;

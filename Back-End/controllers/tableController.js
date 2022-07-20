@@ -12,6 +12,7 @@ const tableController = {
     postTable : async (req, res) =>{
         try {
             const {numero} = req.body
+            console.log(req.params);
             const table = new Table({
                 numero
             })
