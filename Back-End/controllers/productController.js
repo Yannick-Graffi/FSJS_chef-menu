@@ -19,6 +19,7 @@ const productController = {
                     TVA,
                 }
             })
+            await product.save()
             res.status(201).send({message:"Product correctly created", data:product})
         } catch (err) {
             console.error(err.message);
