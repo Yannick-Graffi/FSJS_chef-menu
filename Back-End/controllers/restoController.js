@@ -40,6 +40,15 @@ const RestoController = {
         } catch (err) {
             console.error(err.message);
         }
+    },
+    deleteResto : async(req,res) => {
+        try {
+            const id = req.params.id
+            await Restaurant.findByIdAndDelete(id)
+            res.status(200).send("Restaurant correctly removed")
+        } catch (err) {
+            console.error(err.message);
+        }
     }
 }
 
