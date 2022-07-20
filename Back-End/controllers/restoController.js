@@ -36,6 +36,7 @@ const RestoController = {
             const updatedResto = await Restaurant.findByIdAndUpdate(id, req.body, {
                 new:true,
             })
+            res.status(200).send({message:"Restaurant correctly updated", data:updatedResto})
 
         } catch (err) {
             console.error(err.message);

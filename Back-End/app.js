@@ -8,6 +8,8 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const restoRouter = require('./routes/restos');
+const tableRouter = require('./routes/tables');
+
 
 toConnect()
 
@@ -23,5 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/restaurant', restoRouter);
+app.use('/table', tableRouter);
 
 module.exports = app;
