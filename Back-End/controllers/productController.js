@@ -19,6 +19,7 @@ const productController = {
                     TTC,
                 }
             })
+            res.status(201).send({message:"Product correctly created", data:product})
         } catch (err) {
             console.error(err.message);
         }
@@ -26,10 +27,9 @@ const productController = {
     updateProduct: async (req, res) => {
         try {
             const id = req.params.id
-            const updatedProduct = await Product.
+            const updatedProduct = await Product
         } catch (err) {
             console.error(err.message);
         }
     },
-    deleteProduct:
 }
