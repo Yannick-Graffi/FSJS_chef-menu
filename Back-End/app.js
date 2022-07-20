@@ -9,6 +9,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const restoRouter = require('./routes/restos');
 const tableRouter = require('./routes/tables');
+const productRouter = require('./routes/products')
+const orderRouter = require('./routes/orders');
 
 
 toConnect()
@@ -26,5 +28,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/restaurant', restoRouter);
 app.use('/table', tableRouter);
+app.use('/product', productRouter);
+app.use('/order', orderRouter)
 
 module.exports = app;
