@@ -5,8 +5,9 @@ var logger = require('morgan');
 const toConnect = require('./config/connexion')
 require('dotenv').config();
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const restoRouter = require('./routes/restos');
 
 toConnect()
 
@@ -21,5 +22,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/restaurant', restoRouter);
 
 module.exports = app;
