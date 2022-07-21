@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import register from 'react' 
+import axios from 'axios';
 import './Register.css';
 
 function Register() {
@@ -7,7 +7,6 @@ function Register() {
   const [nom, setNom] = useState("")
   const [email, setEmail] = useState("")
   const [motDePasse, setMotDePasse] = useState("")
-  const [messageErreur, setMessageErreur] = useState("")
   
   function handleChangePrenom(e) {
     setPrenom(e.target.value)
@@ -23,15 +22,14 @@ function Register() {
   }
 
   const onClickRegister = async () => {
-    // Lors du clique sur le bouton, on enregistre toutes les informations saisies en input à l'aide de la méthode register (API)
-    let result = await register(prenom, nom, email, motDePasse)
-    console.log(result)
-    
-    if(result.success === false) {
-      setMessageErreur(result.message)
-    } else {
-      setMessageErreur("")
-    }
+
+    axios.post('localhost:3002/users', {
+      firstname:prenom,
+      lastname:nom,
+      mail:email,
+      password:motDePasse,
+    })
+
   }
 
   return (
@@ -52,10 +50,8 @@ function Register() {
         </div>
         <div className='input-container password-container'>
           <label htmlFor="password">Mot de passe : </label>
-          <input onChange={handleChangeMDP} className="password" type="text" placeholder="Mot de passe" />
+          <input onChange={handleChangeMDP} className="password" type="password" placeholder="Mot de passe" />
         </div>
-        {/* S'il y a un message d'erreur, alors affiche moi le message d'erreur */}
-        { messageErreur && <p className='error-message'>{messageErreur}</p> }
         <button onClick={onClickRegister} className='register-btn'>Créer mon compte</button>
       </div>
     </div>
