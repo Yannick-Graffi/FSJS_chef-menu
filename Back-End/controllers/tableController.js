@@ -17,27 +17,24 @@ const tableController = {
                 numero
             })
             await table.save()
-            res.status(201).send({message:"Restaurant correctly created", data:table})
+            res.status(201).send({message:"Table correctly created", data:table})
         } catch (err) {
             console.error(err.message);
         }
     },
     updateTable : async(req, res) => {
-        try {
             const id = req.params.id
-            const updatedTable = await Restaurant.findByIdAndUpdate(id, req.body, {
+            console.log(req.body);
+            const updatedTable = await Table.findByIdAndUpdate(id, req.body, {
                 new:true,
             })
-            res.send({message:'User correctly updated', data:updatedTable})
-        } catch (err) {
-            console.error(err.message);
-        }
+            res.send({message:'Table correctly updated', data:updatedTable})
     },
     deleteTable : async(req,res) => {
         try {
             const id = req.params.id
             await Table.findByIdAndDelete(id)
-            res.status(200).send("Restaurant correctly removed")
+            res.status(200).send("Table correctly removed")
         } catch (err) {
             console.error(err.message);
         }
