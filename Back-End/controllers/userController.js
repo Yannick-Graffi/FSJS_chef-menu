@@ -32,6 +32,7 @@ const userController = {
             const updatedUser = await User.findByIdAndUpdate(id, req.body, {
                 new:true,
             })
+            await updatedUser.save()
             res.send({message:'User correctly updated', data:updatedUser})
             
         } catch (err) {
