@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const jwt_secret = process.env.jWT_SECRET;
 // const userController = require('../controllers/userController')
 
-router.post('/', (req, res) =>{
+router.post('/', async (req, res) => {
     const {mail, password} = req.body;
     console.log(req.body);
     if (!mail || !password){

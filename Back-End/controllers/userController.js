@@ -17,9 +17,18 @@ const userController = {
                 mail,
                 password: passwordHash,
             })
-            await user.save()
-            res.status(201).send({message:'User correctly created', data:user})
+
+            return User.findOne({mail: mail}).then( async (userMail) =>{
+                if (userMail !== null) {
+                    return res
+                        .status(400)
+                        .send("mail already exist")
+                }
+                await user.save()
+                res.status(201).send({message:'User correctly created', data:user})
+            })
     },
+
     updateUser: async (req, res) =>{
             const id = req.params.id
             const {firstname, lastname, mail, password} = req.body
