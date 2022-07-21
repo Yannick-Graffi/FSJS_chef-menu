@@ -3,9 +3,10 @@ var router = express.Router();
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const jwt_secret = process.env.jWT_SECRET;
 // const userController = require('../controllers/userController')
 
-router.post('/', (req, res) =>{
+router.post('/', async (req, res) => {
     const {mail, password} = req.body;
     console.log(req.body);
     if (!mail || !password){
@@ -34,11 +35,23 @@ router.post('/', (req, res) =>{
                 })
         }
         console.log(user._id);
-        res.send("it's alive !")
 
-        // jwt.sign(
+        jwt.sign(
+            {_id: user._id},
+            jwt_secret,
+            { expiresIn: "24h"},
+            (err, token) => {
+                if (err) {
+                    console.log(err);
+                }
+                res.status(200).send({
+                    token: token,
+                    success: true,
+                    message: "Bienvenue sur Chef's Menu"
+                })
+            }
 
-        // )
+        )
 
 
     })

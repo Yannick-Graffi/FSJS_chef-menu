@@ -3,16 +3,10 @@ const bcrypt = require('bcrypt')
 
 const userController = {
     getUser : async (req, res) => {
-        try {
             const user = req.user
         res.status(200).send(user);
-
-        } catch (error) {
-        console.error(error.message);
-        }
     },
     postUser: async (req, res) => {
-        try {
             const {firstname, lastname, mail, password} = req.body
             const saltRounds = 10;
             let passwordHash = await bcrypt.hash(password, saltRounds)
@@ -23,30 +17,40 @@ const userController = {
                 mail,
                 password: passwordHash,
             })
-            await user.save()
-            res.status(201).send({message:'User correctly created', data:user})
-        } catch (err) {
-            console.error(err.message);
-        }
-    },
-    updateUser: async (req, res) =>{
 
+            return User.findOne({mail: mail}).then( async (userMail) =>{
+                if (userMail !== null) {
+                    return res
+                        .status(400)
+                        .send("mail already exist")
+                }
+                await user.save()
+                res.status(201).send({message:'User correctly created', data:user})
+            })
+    },
+
+    updateUser: async (req, res) =>{
             const id = req.params.id
-            console.log(req.body);
-            const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+            const {firstname, lastname, mail, password} = req.body
+            
+            const saltRounds = 10;
+
+            let passwordHash = await bcrypt.hash(password, saltRounds)
+
+            const updatedUser = await User.findByIdAndUpdate(id, {
+                firstname,
+                lastname,
+                mail,
+                password: passwordHash,
+            }, {
                 new:true,
             })
             res.send({message:'User correctly updated', data:updatedUser})
-
     },
     deleteUser: async (req, res) =>{
-        try {
             const id=req.params.id
             await User.findByIdAndDelete(id)
             res.status(200).send('User correctly deleted')            
-        } catch (err) {
-            console.error(err.message);
-        }
     }
 }
 

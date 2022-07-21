@@ -1,0 +1,19 @@
+.newone {
+        max-width: 300px;
+        margin-left: 43%;
+        margin-bottom: 30px;
+        margin-top:30px;
+        border:2px solid white;
+        border-radius: 10px;
+        background-color: rgb(237, 237, 228);
+}
+label {
+        display:flex;
+        justify-content: center;
+        margin: 3px;
+}
+.Add {
+        margin:5px;
+}
+        
+        
