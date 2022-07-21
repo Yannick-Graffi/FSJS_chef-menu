@@ -1,9 +1,10 @@
 const User = require("../models/User");
+const bcrypt = require('bcrypt')
 
 const userController = {
     getUser : async (req, res) => {
         try {
-            const user = await User.find()
+            const user = req.user
         res.status(200).send(user);
 
         } catch (error) {
@@ -13,11 +14,14 @@ const userController = {
     postUser: async (req, res) => {
         try {
             const {firstname, lastname, mail, password} = req.body
+            const saltRounds = 10;
+            let passwordHash = await bcrypt.hash(password, saltRounds)
+
             const user = new User({
                 firstname,
                 lastname,
                 mail,
-                password,
+                password: passwordHash,
             })
             await user.save()
             res.status(201).send({message:'User correctly created', data:user})
@@ -26,18 +30,14 @@ const userController = {
         }
     },
     updateUser: async (req, res) =>{
-        try {
+
             const id = req.params.id
             console.log(req.body);
             const updatedUser = await User.findByIdAndUpdate(id, req.body, {
                 new:true,
             })
-            await updatedUser.save()
             res.send({message:'User correctly updated', data:updatedUser})
-            
-        } catch (err) {
-            console.error(err.message);            
-        }
+
     },
     deleteUser: async (req, res) =>{
         try {
