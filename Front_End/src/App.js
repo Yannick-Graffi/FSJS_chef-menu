@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import Register from './components/Register.js';
-import Connexion from './components/Connexion.js';
+import Register from './pages/Register.js';
+import Connexion from './pages/Connexion.js';
 import Navbar from './components/Navbar.js';
-import Homepage from './components/Homepage.js';
+import Homepage from './pages/Homepage.js';
 import { Routes, Route, BrowserRouter} from 'react-router-dom';
 
 //Les Routes sont encore à faire, quand je les fait elles ne fonctionnent pas, je fait juste un appel pour le fonctionnement et mon organisation 
