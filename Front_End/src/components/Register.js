@@ -23,13 +23,14 @@ function Register() {
 
   const onClickRegister = async () => {
 
-    axios.post('localhost:3002/users', {
+   let response = await axios.post('http://localhost:3002/users', {
       firstname:prenom,
       lastname:nom,
       mail:email,
       password:motDePasse,
     })
 
+    console.log(response.data.message);
   }
 
   return (
