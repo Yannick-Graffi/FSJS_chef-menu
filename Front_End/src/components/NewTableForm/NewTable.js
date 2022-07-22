@@ -1,4 +1,4 @@
-import './NewTableForm.css';
+import '../NewTableForm/NewTable.css';
 
 function NewTableForm({onChange, onSubmit}) {
 
