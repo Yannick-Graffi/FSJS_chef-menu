@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import "./Connexion.css";
 import axios from 'axios'
-import { set } from 'mongoose';
-
-// import { login } from "react"; 
 
 function Connexion() {
   const [email, setEmail] = useState("")
@@ -18,10 +15,7 @@ function Connexion() {
   }
 
   const handleLogin = async () => {
-    // let result = await login(email, motDePasse)
-    // console.log(result)
-    console.log("j'arrive dans la fonction après le clic du bouton");
-    
+
     await axios
     .post("http://localhost:3002/connexion", {
       mail:email, 
@@ -29,15 +23,13 @@ function Connexion() {
     })
     .then( response => {
       setMessage(response.data.message)
+      localStorage.setItem("token", response.data.token)
+      console.log("token sauvegardé");
       return response
     })
     .catch(err =>{
       setMessage(err.response.data.message);
     })
-
-    // localStorage.setItem("token", res.data.token)
-    // console.log("token sauvegardé");
-
   }
 
   return (
