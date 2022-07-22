@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import "./Connexion.css";
 import axios from 'axios'
+import { set } from 'mongoose';
 
 // import { login } from "react"; 
 
 function Connexion() {
   const [email, setEmail] = useState("")
-  const [motDePasse, setMotDePasse] = useState("")  
+  const [motDePasse, setMotDePasse] = useState("") 
+  const [message, setMessage] = useState("") 
 
   function handleChangeMail(e) {
     setEmail(e.target.value)
@@ -20,13 +22,21 @@ function Connexion() {
     // console.log(result)
     console.log("j'arrive dans la fonction après le clic du bouton");
     
-    let res = await axios.post("http://localhost:3002/connexion", {
+    await axios
+    .post("http://localhost:3002/connexion", {
       mail:email, 
       password:motDePasse,
     })
+    .then( response => {
+      setMessage(response.data.message)
+      return response
+    })
+    .catch(err =>{
+      setMessage(err.response.data.message);
+    })
 
-    localStorage.setItem("token", res.data.token)
-    console.log("token sauvegardé");
+    // localStorage.setItem("token", res.data.token)
+    // console.log("token sauvegardé");
 
   }
 
@@ -49,6 +59,7 @@ function Connexion() {
           type="password" 
           placeholder="Mot de passe" />
       </div>
+      <span style={{color:"#FF0000"}}>{message}</span>
       <button onClick={handleLogin} className='login-btn'>Connexion</button>
       
     </div>
