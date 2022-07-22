@@ -10,6 +10,7 @@ function Table() {
     const [table, setTable] = useState({
         number:"",
     });
+    const [message, setMessage] = useState("")
 
 
 
@@ -22,7 +23,7 @@ function Table() {
 
     useEffect( () => {
         async function getTable(){
-            const result = await axios.get("http://localhost:3002/tables")
+            const result = await axios.get("http://localhost:3002/table")
             setTables(result.data)
         }
         getTable()
@@ -37,19 +38,17 @@ function Table() {
          setTables(filteredTables)
     }
 
-
-
-
     async function handleSubmit(e) {
         e.preventDefault()
         console.log("table = ", table);
         await axios
         .post(`http://localhost:3002/table/`, table)
         .then(res => {
-            console.log("response = ", res);
+            setMessage("")
+            console.log("response = ", res.data);
         })
         .catch(err =>{
-            console.log(err.response.data.message);
+            setMessage(err.response.data.message);
         })
     }
 
@@ -66,6 +65,7 @@ function Table() {
     // }
 
     function handleChange(e) {
+        e.preventDefault();
         setTable({
             number:e.target.value
         })
@@ -82,6 +82,7 @@ function Table() {
              onSubmit={handleSubmit}
              onChange={handleChange}
         />
+        <span style={{color:"#ff0000"}}>{message}</span>
 
             {[tables.map(
                 (table) => (
