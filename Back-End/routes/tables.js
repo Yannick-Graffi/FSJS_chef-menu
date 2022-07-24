@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const tableController = require('../controllers/tableController')
+const Auth = require('../middlwares/auth')
 
-router.get('/', tableController.getTables);
-router.post('/', tableController.postTable);
-router.put('/:numero', tableController.updateTable);
-router.delete('/:numero', tableController.deleteTable);
+router.get('/', Auth.isUser, tableController.getTables);
+router.post('/', Auth.isUser, tableController.postTable);
+router.put('/:id', Auth.isUser, tableController.updateTable);
+router.delete('/:id', Auth.isUser, tableController.deleteTable);
 
 module.exports = router;

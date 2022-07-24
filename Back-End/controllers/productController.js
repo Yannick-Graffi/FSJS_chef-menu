@@ -1,7 +1,7 @@
 const Product = require('../models/Product')
 
 const productController = {
-    getProduct: async (req, res) => {
+    getProducts: async (req, res) => {
         try {
             const product = await Product.find()
             res.status(200).send(product)
@@ -11,14 +11,19 @@ const productController = {
     },
     postProduct: async (req, res) => {
         try {
-            const {name, price:{HT, TVA, TTC}} = req.body
+            const {name, category, price:{HT, TVA}} = req.body
+            const TTC = JSON.parse(HT) * (1+ JSON.parse(TVA))
             const product = new Product({
                 name,
+                category,
                 price:{
                     HT,
-                    TTC,
+                    TVA,
+                    TTC
                 }
             })
+            await product.save()
+            res.status(201).send({message:"Product correctly created", data:product})
         } catch (err) {
             console.error(err.message);
         }
@@ -26,10 +31,33 @@ const productController = {
     updateProduct: async (req, res) => {
         try {
             const id = req.params.id
-            const updatedProduct = await Product.
+            const {name, category, price:{HT, TVA}} = req.body
+            const TTC = JSON.parse(HT) * (1+ JSON.parse(TVA))
+            const updatedProduct = await Product.findByIdAndUpdate(id, {
+                name,
+                category,
+                price:{
+                    HT,
+                    TVA,
+                    TTC
+                }
+            }, {
+                new:true,
+            })
+            res.status(200).send({message:"Product correctly updated", data:updatedProduct})
         } catch (err) {
             console.error(err.message);
         }
     },
-    deleteProduct:
+    deleteProduct: async (req, res) => {
+        try {
+            const id = req.params.id
+            await Product.findByIdAndDelete(id)
+            res.status(200).send("Product correctly removed")
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
 }
+
+module.exports = productController

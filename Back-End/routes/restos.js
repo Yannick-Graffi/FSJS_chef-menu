@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const restoController = require('../controllers/restoController')
+const Auth = require('../middlwares/auth')
 
-router.get('/', restoController.getResto);
-router.post('/', restoController.postResto);
-router.put('/:id', restoController.updateResto);
-router.delete('/:id', restoController.deleteResto);
+router.get('/', Auth.isUser, restoController.getResto);
+router.post('/', Auth.isUser, restoController.postResto);
+router.put('/:id', Auth.isUser, restoController.updateResto);
+router.delete('/:id', Auth.isUser, restoController.deleteResto);
 
 module.exports = router;

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import register from 'react' 
+import axios from 'axios';
 import './Register.css';
+import { set } from 'mongoose';
 
 function Register() {
   const [prenom, setPrenom] = useState("")
   const [nom, setNom] = useState("")
   const [email, setEmail] = useState("")
   const [motDePasse, setMotDePasse] = useState("")
-  const [messageErreur, setMessageErreur] = useState("")
+  const [message, setMessage] = useState("")
   
   function handleChangePrenom(e) {
     setPrenom(e.target.value)
@@ -23,15 +24,20 @@ function Register() {
   }
 
   const onClickRegister = async () => {
-    // Lors du clique sur le bouton, on enregistre toutes les informations saisies en input à l'aide de la méthode register (API)
-    let result = await register(prenom, nom, email, motDePasse)
-    console.log(result)
-    
-    if(result.success === false) {
-      setMessageErreur(result.message)
-    } else {
-      setMessageErreur("")
-    }
+
+   await axios
+    .post('http://localhost:3002/users', {
+      firstname:prenom,
+      lastname:nom,
+      mail:email,
+      password:motDePasse,
+    })
+    .then(res => {
+      setMessage(res.data.message);      
+    })
+    .catch(err =>{
+      setMessage(err.response.data.message);
+    })
   }
 
   return (
@@ -48,15 +54,14 @@ function Register() {
         </div>
         <div className='input-container email-container'>
           <label htmlFor="email">Mail : </label>
-          <input onChange={handleChangeEmail} className="email" type="text" placeholder="Email" />
+          <input onChange={handleChangeEmail} className="email" type="email" placeholder="Email" />
         </div>
         <div className='input-container password-container'>
           <label htmlFor="password">Mot de passe : </label>
-          <input onChange={handleChangeMDP} className="password" type="text" placeholder="Mot de passe" />
+          <input onChange={handleChangeMDP} className="password" type="password" placeholder="Mot de passe" />
         </div>
-        {/* S'il y a un message d'erreur, alors affiche moi le message d'erreur */}
-        { messageErreur && <p className='error-message'>{messageErreur}</p> }
         <button onClick={onClickRegister} className='register-btn'>Créer mon compte</button>
+        <p style={{color:"#ff0000"}}>{message}</p>
       </div>
     </div>
   );

@@ -4,6 +4,9 @@ const ProductSchema = mongoose.Schema({
     name:{
         type: String,
     },
+    category:{
+        type: String,
+    },
     price:{
         HT:{
             type: Number,
@@ -13,7 +16,6 @@ const ProductSchema = mongoose.Schema({
         },
         TTC:{
             type: Number,
-            value: this.HT * (1+this.TVA),
         },
     },
 })
