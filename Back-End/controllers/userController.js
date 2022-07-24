@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 
 const userController = {
     getUser : async (req, res) => {
-            const user = req.user
+        const user = req.user
         res.status(200).send(user);
     },
     postUser: async (req, res) => {
@@ -11,6 +11,12 @@ const userController = {
             const saltRounds = 10;
             let passwordHash = await bcrypt.hash(password, saltRounds)
 
+            if (!firstname || !lastname || !mail || !password) {
+                return res
+                    .status(400)
+                    .send({success:false, message:"Merci de remplir tous les champs"})
+            }
+            
             const user = new User({
                 firstname,
                 lastname,
@@ -22,10 +28,10 @@ const userController = {
                 if (userMail !== null) {
                     return res
                         .status(400)
-                        .send("mail already exist")
+                        .send({message:"Email déjà utilisé"})
                 }
                 await user.save()
-                res.status(201).send({message:'User correctly created', data:user})
+                res.status(201).send({message:'Compte créé', data:user})
             })
     },
 
@@ -45,12 +51,12 @@ const userController = {
             }, {
                 new:true,
             })
-            res.send({message:'User correctly updated', data:updatedUser})
+            res.send({message:'Compte mis à jour', data:updatedUser})
     },
     deleteUser: async (req, res) =>{
             const id=req.params.id
             await User.findByIdAndDelete(id)
-            res.status(200).send('User correctly deleted')            
+            res.status(200).send({message:'Compte supprimé'})            
     }
 }
 
