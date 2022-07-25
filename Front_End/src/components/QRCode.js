@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import QRCode from "react-qr-code";
-
 import "./QRCode.css";
 
 function QRCode() {
@@ -13,6 +12,6 @@ function QRCode() {
 }
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(<QRCode />, rootElement);
 
 export default QRCode;
