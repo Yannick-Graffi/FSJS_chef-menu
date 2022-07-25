@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 
 function ForgotPassword() {
-    let navigate = useNavigate();
 
     const [mail, setMail] = useState("")
+    const [message, setMessage] = useState("")
 
     const handleChange = (e) => {
         setMail(e.target.value)
@@ -14,12 +14,22 @@ function ForgotPassword() {
 
     const sendMail = (e) => {
         e.preventDefault();
-        navigate('../connexion')
-    }
+        axios.post('http://localhost:3002/forgotPassword', {
+            mail
+        })
+        .then(res => {
+            setMessage(res.data.message)
+        })
+        .catch(err =>{
+            setMessage(err.response.data.message)
+        })
+        }
+    
     
     return (  
         <div>
             <h1>Récupération du mot de passe</h1>
+            <Link to={"../connexion"}>Retour</Link>
             <form onSubmit={sendMail}>
                 <input 
                     type="email" 
@@ -27,6 +37,7 @@ function ForgotPassword() {
                     placeholder="saiissez votre adresse mail"/>
                 <button>Envoyer</button>
             </form>
+            <p style={{color : "#ff0000"}}>{message}</p>
         </div>
     );
 }
