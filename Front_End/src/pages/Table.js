@@ -40,7 +40,6 @@ function Table() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log("table = ", table);
         let accesToken = localStorage.getItem('token')
         let config = {
             headers: {'Authorization' : `Bearer ${accesToken}`}

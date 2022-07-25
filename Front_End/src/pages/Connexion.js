@@ -3,24 +3,28 @@ import "./Connexion.css";
 import axios from 'axios'
 
 function Connexion() {
-  const [email, setEmail] = useState("")
-  const [motDePasse, setMotDePasse] = useState("") 
   const [message, setMessage] = useState("") 
+  const [formData, setFormData] = useState({
+    mail:"",
+    password:"",
+  })
 
-  function handleChangeMail(e) {
-    setEmail(e.target.value)
-  }
-  function handleChangeMDP(e) {
-    setMotDePasse(e.target.value)
+  function handleChange(e) {
+    setFormData(
+      prevState => (
+        {
+          ...prevState,
+          [e.target.name]:e.target.value
+        }
+      )
+    )
   }
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault()
 
     await axios
-    .post("http://localhost:3002/connexion", {
-      mail:email, 
-      password:motDePasse,
-    })
+    .post("http://localhost:3002/connexion", formData)
     .then( response => {
       setMessage(response.data.message)
       localStorage.setItem("token", response.data.token)
@@ -33,29 +37,32 @@ function Connexion() {
   }
 
   return (
-    <div className='connexion-container'>
+    <form 
+      onSubmit={handleLogin}
+      className='connexion-container'
+    >
       <h2>Connexion</h2>
       <div className='input-container mail-container'>
         <label htmlFor="mail">Mail : </label>
         <input 
-          onChange={handleChangeMail} 
-          className="mail" 
+          onChange={handleChange} 
+          name="mail" 
           type="text" 
           placeholder="Mail" />
       </div>
       <div className='input-container password-container'>
         <label htmlFor="password">Mot de passe : </label>
         <input 
-          onChange={handleChangeMDP} 
-          className="password" 
+          onChange={handleChange} 
+          name="password" 
           type="password" 
           placeholder="Mot de passe" />
       </div>
       <span style={{color:"#FF0000"}}>{message}</span>
-      <button onClick={handleLogin} className='login-btn'>Connexion</button>
+      <button className='login-btn'>Connexion</button>
       
-    </div>
+    </form>
   );
 }
-console.log('test app.js bien envoyé')
+
 export default Connexion;
