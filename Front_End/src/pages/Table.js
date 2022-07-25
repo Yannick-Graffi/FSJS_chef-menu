@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './Table.css';
 import axios from 'axios';
-import TablePreview from '../components/TablePreview';
-import NewTableForm from '../components/NewTableForm';
-
+import TablePreview from '../components/TablePreview/TablePreview';
+import NewTableForm from '../components/NewTableForm/NewTableForm';
+import QRCode from '../components/QRCode';
 
 function Table() {
     const [tables,setTables] = useState([]);
     const [table, setTable] = useState({
-        number
+        number:""
     });
 
 
@@ -42,7 +42,12 @@ function Table() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        await axios.post(`http://localhost:3002/tables/`, table)
+        await axios.post(`http://localhost:3002/table/`, table).then(res =>{
+            console.log(res)
+        })
+        .catch(err=> {
+            console.log(err)
+        })
     }
 
     // function displayUpdate(id) {
@@ -66,6 +71,8 @@ function Table() {
 
 
     return (
+
+        <h2>chef-sMenu</h2>,
 
        <div className="publish-container">
             <h2>Bienvenue sur votre page table</h2>
