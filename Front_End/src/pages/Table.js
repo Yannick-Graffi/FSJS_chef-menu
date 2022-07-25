@@ -3,7 +3,7 @@ import './Table.css';
 import axios from 'axios';
 import TablePreview from '../components/TablePreview/TablePreview';
 import NewTableForm from '../components/NewTableForm/NewTableForm';
-import QRCode from '../components/QRCode';
+// import QRCode from '../components/QRCode';
 
 function Table() {
     const [tables,setTables] = useState([]);
