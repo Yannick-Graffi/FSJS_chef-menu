@@ -1,72 +1,97 @@
-import React, { useState } from 'react';
+import React, {useState } from 'react';
 import axios from 'axios';
 import './Register.css';
-import { set } from 'mongoose';
+import {useNavigate } from 'react-router-dom';
 
 function Register() {
-  const [prenom, setPrenom] = useState("")
-  const [nom, setNom] = useState("")
-  const [email, setEmail] = useState("")
-  const [motDePasse, setMotDePasse] = useState("")
-  const [motDePasseConfirm, setMotDePasseConfirm] = useState("")
+  let navigate = useNavigate();
+
   const [message, setMessage] = useState("")
+  const [formData, setFormData] = useState({
+    firstname:"",
+    lastname:"",
+    mail:"",
+    password:"",
+    passwordConfirm:"",
+  })
   
-  function handleChangePrenom(e) {
-    setPrenom(e.target.value)
-  }
-  function handleChangeNom(e) {
-    setNom(e.target.value)
-  }
-  function handleChangeEmail(e) {
-    setEmail(e.target.value)
-  }
-  function handleChangeMDP(e) {
-    setMotDePasse(e.target.value)
-  }
-  function handleChangeMDP(e) {
-    setMotDePasse(e.target.value)
-  }
-  function handleChangeMDPConfirm(e) {
-    setMotDePasseConfirm(e.target.value)
+  const handleChange = (e) => {
+    setFormData(
+      prevState => (
+        {
+          ...prevState,
+          [e.target.name]:e.target.value
+        }
+      )
+    )
   }
 
-  const onClickRegister = async () => {
-//fonction verification mot de passe a creer
+  const onClickRegister = async (e) => {
+    e.preventDefault()
 
-    axios.post('localhost:3002/users', {
-      firstname:prenom,
-      lastname:nom,
-      mail:email,
-      password:motDePasse,
-    })
-
+    if (formData.password === formData.passwordConfirm) {
+      await axios
+      .post('http://localhost:3002/users', formData)
+      .then(res => {
+        setMessage(res.data.message);
+        navigate("../connexion")
+      })
+      .catch(err =>{
+        setMessage(err.response.data.message);
+      })      
+    } else {
+      setMessage("Les mots de passe ne corresponspondent pas")
+    }
   }
 
   return (
-    <div>
+    <form onSubmit={onClickRegister}>
       <div className='creation-compte-container'>
         <h2>Créez votre compte Restaurateur</h2>
         <div className='input-container prenom-container'>
           <label htmlFor="prenom">Prénom : </label>
-          <input onChange={handleChangePrenom} className="prenom" type="text" placeholder="Prenom" />
+          <input 
+            onChange={handleChange} 
+            name="firstname" 
+            type="text" 
+            placeholder="Prenom" />
         </div>
         <div className='input-container nom-container'>
           <label htmlFor='nom'>Nom : </label>
-          <input onChange={handleChangeNom} className="nom" type="text" placeholder="Nom" />
+          <input 
+            onChange={handleChange} 
+            Name="lastname" 
+            type="text" 
+            placeholder="Nom" />
         </div>
         <div className='input-container email-container'>
           <label htmlFor="email">Mail : </label>
-          <input onChange={handleChangeEmail} className="email" type="email" placeholder="Email" />
+          <input 
+            onChange={handleChange} 
+            defaultValue=""
+            name="mail" 
+            type="email" 
+            placeholder="Email" />
         </div>
         <div className='input-container password-container'>
           <label htmlFor="password">Mot de passe : </label>
-          <input onChange={handleChangeMDP} className="password" type="password" placeholder="Mot de passe" />
-          <input onChange={handleChangeMDPConfirm} className="password" type="password" placeholder="Confirmation du mot de passe" />
+          <input 
+            onChange={handleChange} 
+            defaultValue=""
+            name="password" 
+            type="password" 
+            placeholder="Mot de passe" />
+          <br/>
+          <input 
+            onChange={handleChange} 
+            name="passwordConfirm" 
+            type="password" 
+            placeholder="Confirmation du mot de passe" />
         </div>
-        <button onClick={onClickRegister} className='register-btn'>Créer mon compte</button>
+        <button className='register-btn'>Créer mon compte</button>
         <p style={{color:"#ff0000"}}>{message}</p>
       </div>
-    </div>
+    </form>
   );
 }
 

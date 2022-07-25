@@ -3,7 +3,11 @@ import './Table.css';
 import axios from 'axios';
 import TablePreview from '../components/TablePreview/TablePreview';
 import NewTableForm from '../components/NewTableForm/NewTableForm';
+<<<<<<< HEAD
 
+=======
+// import QRCode from '../components/QRCode';
+>>>>>>> d479806cc79f536ecb1be025880485c12dca2e68
 
 function Table() {
     const [tables,setTables] = useState([]);
@@ -40,8 +44,15 @@ function Table() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        await axios.post(`http://localhost:3002/table/`, table).then(res =>{
-            console.log(res)
+        let accesToken = localStorage.getItem('token')
+        let config = {
+            headers: {'Authorization' : `Bearer ${accesToken}`}
+        }
+        await axios
+        .post(`http://localhost:3002/table/`, table, config)
+        .then(res => {
+            setMessage("")
+            console.log("response = ", res.data);
         })
         .catch(err=> {
             console.log(err)
