@@ -41,8 +41,12 @@ function Table() {
     async function handleSubmit(e) {
         e.preventDefault()
         console.log("table = ", table);
+        let accesToken = localStorage.getItem('token')
+        let config = {
+            headers: {'Authorization' : `Bearer ${accesToken}`}
+        }
         await axios
-        .post(`http://localhost:3002/table/`, table)
+        .post(`http://localhost:3002/table/`, table, config)
         .then(res => {
             setMessage("")
             console.log("response = ", res.data);

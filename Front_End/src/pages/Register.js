@@ -8,6 +8,7 @@ function Register() {
   const [nom, setNom] = useState("")
   const [email, setEmail] = useState("")
   const [motDePasse, setMotDePasse] = useState("")
+  const [motDePasseConfirm, setMotDePasseConfirm] = useState("")
   const [message, setMessage] = useState("")
   
   function handleChangePrenom(e) {
@@ -22,22 +23,32 @@ function Register() {
   function handleChangeMDP(e) {
     setMotDePasse(e.target.value)
   }
+  function handleChangeMDP(e) {
+    setMotDePasse(e.target.value)
+  }
+  function handleChangeMDPConfirm(e) {
+    setMotDePasseConfirm(e.target.value)
+  }
 
   const onClickRegister = async () => {
+    if (motDePasse === motDePasseConfirm) {
+      await axios
+      .post('http://localhost:3002/users', {
+        firstname:prenom,
+        lastname:nom,
+        mail:email,
+        password:motDePasse,
+      })
+      .then(res => {
+        setMessage(res.data.message);      
+      })
+      .catch(err =>{
+        setMessage(err.response.data.message);
+      })      
+    } else {
+      setMessage("Les mots de passe ne corresponspondent pas")
+    }
 
-   await axios
-    .post('http://localhost:3002/users', {
-      firstname:prenom,
-      lastname:nom,
-      mail:email,
-      password:motDePasse,
-    })
-    .then(res => {
-      setMessage(res.data.message);      
-    })
-    .catch(err =>{
-      setMessage(err.response.data.message);
-    })
   }
 
   return (
@@ -59,6 +70,7 @@ function Register() {
         <div className='input-container password-container'>
           <label htmlFor="password">Mot de passe : </label>
           <input onChange={handleChangeMDP} className="password" type="password" placeholder="Mot de passe" />
+          <input onChange={handleChangeMDPConfirm} className="password" type="password" placeholder="Confirmation du mot de passe" />
         </div>
         <button onClick={onClickRegister} className='register-btn'>Créer mon compte</button>
         <p style={{color:"#ff0000"}}>{message}</p>
