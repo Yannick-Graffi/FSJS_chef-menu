@@ -1,8 +1,11 @@
 import React, {useState } from 'react';
 import axios from 'axios';
 import './Register.css';
+import {useNavigate } from 'react-router-dom';
 
 function Register() {
+  let navigate = useNavigate();
+
   const [message, setMessage] = useState("")
   const [formData, setFormData] = useState({
     firstname:"",
@@ -31,6 +34,7 @@ function Register() {
       .post('http://localhost:3002/users', formData)
       .then(res => {
         setMessage(res.data.message);
+        navigate("../connexion")
       })
       .catch(err =>{
         setMessage(err.response.data.message);
@@ -64,6 +68,7 @@ function Register() {
           <label htmlFor="email">Mail : </label>
           <input 
             onChange={handleChange} 
+            defaultValue=""
             name="mail" 
             type="email" 
             placeholder="Email" />
@@ -72,6 +77,7 @@ function Register() {
           <label htmlFor="password">Mot de passe : </label>
           <input 
             onChange={handleChange} 
+            defaultValue=""
             name="password" 
             type="password" 
             placeholder="Mot de passe" />

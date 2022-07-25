@@ -11,7 +11,6 @@ function Navbar() {
         <div className="pages">
         
             <Link to="/"style={{marginRight:"10px"}}>Homepage</Link> 
-            <Link to="/Register" style={{marginRight:"10px"}}>Création de compte</Link>
             <Link to="/Connexion" >Connexion restaurateur</Link>
         </div>
       </nav>

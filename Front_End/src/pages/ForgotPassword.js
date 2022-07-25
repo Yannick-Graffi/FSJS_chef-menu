@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom'
 
 
 function ForgotPassword() {
+    let navigate = useNavigate();
+
     const [mail, setMail] = useState("")
 
     const handleChange = (e) => {
@@ -11,7 +14,7 @@ function ForgotPassword() {
 
     const sendMail = (e) => {
         e.preventDefault();
-        console.log(mail);
+        navigate('../connexion')
     }
     
     return (  
