@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './Table.css';
 import axios from 'axios';
 import TablePreview from '../components/TablePreview/TablePreview';
-import NewTableForm from '../components/NewTableForm/NewTable';
-
+import NewTableForm from '../components/NewTableForm/NewTableForm';
+import QRCode from '../components/QRCode';
 
 function Table() {
     const [tables,setTables] = useState([]);
     const [table, setTable] = useState({
-        number:"",
+        number:""
     });
     const [message, setMessage] = useState("")
 
@@ -50,8 +50,8 @@ function Table() {
             setMessage("")
             console.log("response = ", res.data);
         })
-        .catch(err =>{
-            setMessage(err.response.data.message);
+        .catch(err=> {
+            console.log(err)
         })
     }
 
@@ -77,6 +77,8 @@ function Table() {
 
 
     return (
+
+        <h2>chef-sMenu</h2>,
 
        <div className="publish-container">
             <h2>Bienvenue sur votre page table</h2>

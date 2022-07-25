@@ -7,11 +7,13 @@ const userController = {
         res.status(200).send(user);
     },
     postUser: async (req, res) => {
-            const {firstname, lastname, mail, password} = req.body
+        console.log("body",req.body);
+            const {firstname, lastname, mail, password, passwordConfirm} = req.body
             const saltRounds = 10;
             let passwordHash = await bcrypt.hash(password, saltRounds)
 
-            if (!firstname || !lastname || !mail || !password) {
+            if (!firstname || !lastname || !mail || !password || !passwordConfirm) {
+
                 return res
                     .status(400)
                     .send({success:false, message:"Merci de remplir tous les champs"})
