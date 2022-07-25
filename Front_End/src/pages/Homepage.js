@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Homepage.css'
 import './Restaurant.js'
 import axios from 'axios';
-import Increment from '../components/Increment';
+import ForgotPassword from './ForgotPassword';
 
 
 function Homepage() {
@@ -19,8 +19,8 @@ function Homepage() {
     
     return ( 
         <div>
-            <h2>Chef Menu</h2> 
-            <Increment />
+            <h2>Chef Menu</h2>
+            <ForgotPassword/>
         </div>
     );
 }
