@@ -4,6 +4,9 @@ const ProductSchema = mongoose.Schema({
     name:{
         type: String,
     },
+    category:{
+        type: String,
+    },
     price:{
         HT:{
             type: Number,

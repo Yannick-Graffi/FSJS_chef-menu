@@ -1,60 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../models/User')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const jwt_secret = process.env.jWT_SECRET;
-// const userController = require('../controllers/userController')
+const loginController = require('../controllers/loginController')
 
-router.post('/', async (req, res) => {
-    const {mail, password} = req.body;
-    console.log(req.body);
-    if (!mail || !password){
-        return res
-            .status(400)
-            .send({success: false, message:"Merci de remplir tous les champs"})
-    }
-
-    return User.findOne({mail: mail}).then((user)=>{
-        if (user === null) {
-            return res
-            .status(401)
-            .send({
-                success:false,
-                message:"mail incorrect"
-            })
-        }
-
-        let passwordsMatch = bcrypt.compareSync(password, user.password);
-        if (!passwordsMatch) {
-            return res
-                .status(401)
-                .send({
-                    success : false,
-                    message : "Mot de passe erroné"
-                })
-        }
-        console.log(user._id);
-
-        jwt.sign(
-            {_id: user._id},
-            jwt_secret,
-            { expiresIn: "24h"},
-            (err, token) => {
-                if (err) {
-                    console.log(err);
-                }
-                res.status(200).send({
-                    token: token,
-                    success: true,
-                    message: "Bienvenue sur Chef's Menu"
-                })
-            }
-
-        )
-
-
-    })
-})
+router.post('/', loginController.verifyConnection)
 
 module.exports = router

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const TableSchema = mongoose.Schema({
-    numero:{
+    number:{
         type:Number,
     }
 })

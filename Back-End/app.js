@@ -13,6 +13,7 @@ const restoRouter = require('./routes/restos');
 const tableRouter = require('./routes/tables');
 const productRouter = require('./routes/products')
 const orderRouter = require('./routes/orders');
+const menuRouter = require('./routes/menus')
 
 require('./config/connexion')
 
@@ -31,6 +32,8 @@ app.use('/users', usersRouter);
 app.use('/restaurant', restoRouter);
 app.use('/table', tableRouter);
 app.use('/product', productRouter);
-app.use('/order', orderRouter)
+app.use('/order', orderRouter);
+app.use('/menu', menuRouter)
+
 
 module.exports = app;

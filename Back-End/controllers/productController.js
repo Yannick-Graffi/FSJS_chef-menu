@@ -11,10 +11,11 @@ const productController = {
     },
     postProduct: async (req, res) => {
         try {
-            const {name, price:{HT, TVA}} = req.body
+            const {name, category, price:{HT, TVA}} = req.body
             const TTC = JSON.parse(HT) * (1+ JSON.parse(TVA))
             const product = new Product({
                 name,
+                category,
                 price:{
                     HT,
                     TVA,
@@ -30,10 +31,11 @@ const productController = {
     updateProduct: async (req, res) => {
         try {
             const id = req.params.id
-            const {name, price:{HT, TVA}} = req.body
+            const {name, category, price:{HT, TVA}} = req.body
             const TTC = JSON.parse(HT) * (1+ JSON.parse(TVA))
             const updatedProduct = await Product.findByIdAndUpdate(id, {
                 name,
+                category,
                 price:{
                     HT,
                     TVA,
