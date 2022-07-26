@@ -8,6 +8,7 @@ import Table from './pages/Table.js';
 import { Routes, Route, BrowserRouter} from 'react-router-dom';
 import ForgotPassword from './pages/ForgotPassword';
 import Restaurant from './pages/Restaurant';
+import ResetPassword from './pages/ResetPassword';
 
 //Les Routes sont encore à faire, quand je les fait elles ne fonctionnent pas, je fait juste un appel pour le fonctionnement et mon organisation 
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/table" element={<Table/>}/>
           <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>
           <Route path="/restaurant" element={<Restaurant/>}></Route>
+          <Route path='/reset/:id' element={<ResetPassword/>}></Route>
         </Routes> 
         </BrowserRouter>
     </div>
