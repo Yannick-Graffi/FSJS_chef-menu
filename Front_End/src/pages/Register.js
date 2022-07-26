@@ -30,6 +30,7 @@ function Register() {
     e.preventDefault()
 
     if (formData.password === formData.passwordConfirm) {
+      console.log(formData);
       await axios
       .post('http://localhost:3002/users', formData)
       .then(res => {
@@ -40,7 +41,7 @@ function Register() {
         setMessage(err.response.data.message);
       })      
     } else {
-      setMessage("Les mots de passe ne corresponspondent pas")
+      setMessage("Les mots de passe ne correspondent pas")
     }
   }
 

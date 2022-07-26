@@ -1,22 +1,44 @@
 import './NewRestaurantForm.css';
 
-function NewLodgeForm({onChangeT, onChangeD, onChangeS, onSubmit}) {
+function NewRestaurantForm ({onChange, onSubmit}) {
  
     return ( 
 
 
         <div className="newone">
             <form onSubmit={onSubmit}>
-            <label>Titre :</label>
-                <input type="text" onChange={onChangeT} placeholder="Titre de l'annonce"/>
-                <label>Description :</label>
-                <textarea onChange={onChangeD} placeholder="Description"/>
-                <label>Style :</label>
-                <input type="text" onChange={onChangeS} placeholder="Style"/>
+                <label>Nom :</label>
+                <input type="text" name="name" onChange={onChange} placeholder="Nom du restaurant" required="true"/>
+                
+                <label>Adresse :</label>
+                <input type="text" name="adress" onChange={onChange} placeholder="Numéro et nom de la rue" required="true"/>
+                
+                <div className="zipCodeCity">
+                    <div>
+                        <label>Code postal :</label>
+                        <input type="text" name="zipCode" onChange={onChange} placeholder="Code postal" required="true"/>
+                    </div>
+                    <div>
+                        <label>Ville :</label>
+                        <input type="text" name="city" onChange={onChange} placeholder="Ville" required="true"/>
+                    </div>
+                
+                </div>
+                <div className="hours">
+                    <div>
+                        <label>Ouverture :</label>
+                        <input type="text" name="openingHours" onChange={onChange} placeholder="Heure d'ouverture" required="true"/>
+                    </div>
+
+                    <div>
+                        <label>Fermeture :</label>
+                        <input type="text" name="closingHours" onChange={onChange} placeholder="Heure de fermeture" required="true"/>
+                    </div>
+                </div>
                 <button className='Add'>Ajouter un restaurant</button>
             </form>
         </div>
      );
 }
 
-export default NewLodgeForm;
+export default NewRestaurantForm;
