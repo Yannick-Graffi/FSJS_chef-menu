@@ -3,7 +3,7 @@ const Restaurant = require('../models/Restaurant')
 const RestoController = {
     getResto : async (req, res) => {
         try {
-            const resto = await Restaurant.find()
+            const resto = await Restaurant.find({ownerId:req.user._id})
             res.status(200).send(resto)
         } catch (err) {
             console.error(err.message);
@@ -22,7 +22,8 @@ const RestoController = {
                 hours:{
                     opening,
                     closing,
-                }
+                },
+                ownerId:req.user._id
             })
             await resto.save()
             res.status(201).send({message:"Restaurant correctly created", data:resto})
@@ -33,9 +34,10 @@ const RestoController = {
     updateResto : async(req, res) => {
         try {
             const id = req.params.id
-            const updatedResto = await Restaurant.findByIdAndUpdate(id, req.body, {
-                new:true,
-            })
+            const updatedResto = await Restaurant.findOne({id:req.user._id})
+            // const updatedResto = await Restaurant.findByIdAndUpdate(id, req.body, {
+            //     new:true,
+            // })
             res.status(200).send({message:"Restaurant correctly updated", data:updatedResto})
 
         } catch (err) {

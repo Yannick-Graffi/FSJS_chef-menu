@@ -23,7 +23,7 @@ const forgotController = {
                         .send({success:false, message:"Aucun compte existant avec cette adresse mail"})
                 } else{
                     jwt.sign(
-                        {_id: user._id},
+                        {_id: user._id, reset:true},
                         jwt_secret,
                         { expiresIn: "1h"},
                         (err, token) => {

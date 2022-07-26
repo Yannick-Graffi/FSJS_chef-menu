@@ -1,4 +1,4 @@
-const Menu = require( "../models/Menu");
+const Menu = require( "../models/schemas/Menu");
 
 const menuController = {
     getMenu : async (req, res) => {
