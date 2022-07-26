@@ -34,39 +34,39 @@ const forgotController = {
                                 token: token,
                                 success: true,
                             })
+                            const transporter = nodemailer.createTransport({
+                                service: "gmail",
+                                auth:{
+                                    user: `${process.env.MAIL_ADRESS}`,
+                                    pass: `${process.env.MAIL_PASSWORD}`
+                                },
+                            });
+        
+                            const mailOption = {
+                                from:` Chef menu <${process.env.MAIL_ADRESS}>`,
+                                to:`${user.mail}`,
+                                subject:'Lien de récupération du mot de passe',
+                                text:
+                                    'Vous recevez ce message car vous (ou quelqu\'un d\'autre) avez demandé la réinitialisation de votre mot de passe. \n \n'
+                                    + 'Cliquez sur ce lien, ou collez-le dans votre navigateur. Vous avez 1h pour compléter la procédure : \n \n'
+                                    + `http://localhost:3000/reset/${token}`
+                                    + 'Si vous n\'êtes pas à l\'origine de cette demande, merci d\'ignorer ce message, votre mot de passe sera inchangé'
+                            };
+        
+                            console.log("mail envoyé");
+        
+                            transporter.sendMail(mailOption, (err, response) =>{
+                                if (err) {
+                                    console.error(err.message);
+                                } else {
+                                    return res
+                                        .status(200)
+                                        .send({success:true, message:"mail de récupération envoyé", data:response})
+                                }
+                            })
                         }
                     )
 
-                    const transporter = nodemailer.createTransport({
-                        service: "gmail",
-                        auth:{
-                            user: `${process.env.MAIL_ADRESS}`,
-                            pass: `${process.env.MAIL_PASSWORD}`
-                        },
-                    });
-
-                    const mailOption = {
-                        from:"Chef's menu",
-                        to:`${user.mail}`,
-                        subject:'Lien de récupération du mot de passe',
-                        text:
-                            'Vous recevez ce message car vous (ou quelqu\'un d\'autre) a demandé la réinitialisation de votre mot de passe. \n \n'
-                            + 'Cliquez sur ce lien, ou collez-le dans votre navigateur. Vous avez 1h pour compléter la procédure : \n \n'
-                            + `http://localhost:3000/reset/${token}`
-                            + 'Si vous n\'êtes pas à l\'origine de cette demande, merci d\'ignorer ce message, votre mot de passe sera inchangé'
-                    };
-
-                    console.log("mail envoyé");
-
-                    transporter.sendMail(mailOption, (err, response) =>{
-                        if (err) {
-                            console.error(err.message);
-                        } else {
-                            return res
-                                .status(200)
-                                .send({success:true, message:"mail de récupération envoyé", data:response})
-                        }
-                    })
 
                 }
             })
