@@ -18,6 +18,8 @@ function ForgotPassword() {
             mail
         })
         .then(res => {
+            console.log("token, es-tu là ?",res.data);
+            localStorage.setItem("resetPasswordToken", res.data.token)
             setMessage(res.data.message)
         })
         .catch(err =>{
