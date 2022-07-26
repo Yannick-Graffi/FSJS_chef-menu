@@ -30,7 +30,6 @@ function Register() {
     e.preventDefault()
 
     if (formData.password === formData.passwordConfirm) {
-      console.log(formData);
       await axios
       .post('http://localhost:3002/users', formData)
       .then(res => {

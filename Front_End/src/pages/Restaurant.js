@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Restaurant.css';
 import axios from 'axios';
 import NewRestaurantForm from '../components/NewRestaurantForm/NewRestaurantForm';
+import RestaurantPreview from '../components/RestaurantPreview/RestaurantPreview';
 // import UpdateForm from '../components/UpdateForm/UpdateForm'
 
 function Publication() {
@@ -24,18 +25,26 @@ function Publication() {
         headers: {'Authorization' : `Bearer ${accesToken}`}
     }
 
-    // useEffect( () => {
-    //     let accesToken = localStorage.getItem('token')
-    //     let config = {
-    //         headers: {'Authorization' : `Bearer ${accesToken}`}
-    //     }
+    useEffect( () => {
+        let accesToken = localStorage.getItem('token')
+        let config = {
+            headers: {'Authorization' : `Bearer ${accesToken}`}
+        }
 
-    //     async function getRestaurant(){
-    //             const result = await axios.get("http://localhost:3002/restaurants", config)
-    //         setRestaurants(result.data)
-    //     }
-    //     getRestaurant()
-    // }, [])
+        async function getRestaurant(){
+                await axios
+                    .get("http://localhost:3002/restaurant", config)
+                    .then(res => {
+                        console.log("log après GET",res.data, "type des res.data = ", typeof res.data);
+                        setRestaurants(res.data)
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
+
+        }
+        getRestaurant()
+    }, [])
 
     // async function handleDelete(id){
     //     await axios.delete(`http://localhost:3002/restaurant/${id}`, config)
@@ -56,7 +65,10 @@ function Publication() {
             )
         )
     }
-    
+
+    const handleClick = (resto) => {
+        console.log("Wahouuu, voici l'resto : ",resto);
+    }    
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -118,19 +130,18 @@ function Publication() {
                 onChange={handleChange}
                 onSubmit={handleSubmit}
             />
-            <p>{restaurants}</p>
-            <p>{message}</p>
-            
-            {/* {[restaurants.map(
-                (restaurant) => (
-                    <HostPreview 
+            <p>{message}</p>  
+
+            {[restaurants.map((restaurant, index) => (
+                    <RestaurantPreview 
                         key={restaurant._id}
                         restaurant={restaurant}
-                        onDelete={handleDelete}
+                        onClick={handleClick}
+                        // onDelete={handleDelete}
                         // onUpdate={displayUpdate}
                     />                    
                 )
-            )]} */}
+            )]}
         </div>
     );
 }
