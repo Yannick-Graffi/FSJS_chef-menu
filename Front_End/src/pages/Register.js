@@ -14,7 +14,7 @@ function Register() {
     password:"",
     passwordConfirm:"",
   })
-  
+
   const handleChange = (e) => {
     setFormData(
       prevState => (
