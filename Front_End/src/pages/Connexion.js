@@ -32,7 +32,7 @@ function Connexion() {
       setMessage(response.data.message)
       localStorage.setItem("token", response.data.token)
       console.log("token sauvegardé");
-      navigate('../restaurant')
+      navigate('../restaurants')
       return response
     })
     .catch(err =>{
