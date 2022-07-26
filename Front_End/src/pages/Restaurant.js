@@ -20,16 +20,22 @@ function Publication() {
         style:""
     })
 
+    let accesToken = localStorage.getItem('token')
+    let config = {
+        headers: {'Authorization' : `Bearer ${accesToken}`}
+    }
+
     useEffect( () => {
         async function getRestaurant(){
-            const result = await axios.get("http://localhost:3002/restaurants")
+
+            const result = await axios.get("http://localhost:3002/restaurants", config)
             setRestaurants(result.data)
         }
         getRestaurant()
     }, [])
 
     async function handleDelete(id){
-        await axios.delete(`http://localhost:3002/restaurant/${id}`)
+        await axios.delete(`http://localhost:3002/restaurant/${id}`, config)
 
  
         const filteredRestaurants = restaurants.filter(lodge => lodge._id !== id)

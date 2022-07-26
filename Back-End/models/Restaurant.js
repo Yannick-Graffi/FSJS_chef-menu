@@ -5,17 +5,9 @@ const RestaurantSchema = mongoose.Schema({
     name:{
         type: String,
     },
-    adress:{
-        adress:{
-            type:String,
-        },
-        postcode:{
-            type : String,
-        },
-        city:{
-            type: String,
-        }
-    },
+    adress: String,
+    zipcode: String,
+    city: String,
     hours:{
         opening: {
             type: String
@@ -23,7 +15,7 @@ const RestaurantSchema = mongoose.Schema({
         closing: {
             type: String
         },
-    },
+    },    
     ownerId: String,
     menu: [MenuSchema],
     
