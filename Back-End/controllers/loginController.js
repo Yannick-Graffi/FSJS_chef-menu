@@ -15,7 +15,7 @@ const loginController = {
     
         return User.findOne({mail: mail}).then((user)=>{
             console.log(user);
-            if (user === null) {
+            if (!user) {
                 return res
                 .status(401)
                 .send({

@@ -28,11 +28,17 @@ const auth = {
         jwt.verify(token, jwt_secret, (err, decodedToken) => {
             if (err) {
                 return res
-                    .status(404)
+                    .status(401)
                     .send({message:"Token erroné"});
 
             } else {
-                let id = decodedToken._id
+                let id = decodedToken._id;
+
+                if (decodedToken.reset === true){
+                    return res 
+                        .status(401)
+                        .send({message:"token erroné"});
+                } 
 
                 User.findOne({_id:id})
                 .then((response)=>{

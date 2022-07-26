@@ -6,6 +6,7 @@ const ProductSchema = mongoose.Schema({
     },
     category:{
         type: String,
+        enum:["Entrées", "Plats", "Desserts", "Boissons"]
     },
     price:{
         HT:{

@@ -10,5 +10,4 @@ const MenuSchema = mongoose.Schema({
     }
 })
 
-const Menu = mongoose.model('menus', MenuSchema)
-module.exports = Menu
+module.exports = MenuSchema

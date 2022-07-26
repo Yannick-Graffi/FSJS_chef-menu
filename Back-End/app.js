@@ -14,6 +14,8 @@ const tableRouter = require('./routes/tables');
 const productRouter = require('./routes/products')
 const orderRouter = require('./routes/orders');
 const menuRouter = require('./routes/menus')
+const forgotRouter = require('./routes/forgotPassword')
+const resetRouter = require('./routes/resetPassword')
 
 require('./config/connexion')
 
@@ -34,6 +36,8 @@ app.use('/table', tableRouter);
 app.use('/product', productRouter);
 app.use('/order', orderRouter);
 app.use('/menu', menuRouter)
+app.use('/forgotPassword', forgotRouter)
+app.use('/reset', resetRouter)
 
 
 module.exports = app;

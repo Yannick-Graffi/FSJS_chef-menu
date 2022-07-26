@@ -1,5 +1,7 @@
 import React from 'react';
-import './TablePreview.css'
+import './TablePreview.css';
+// import QRCode from '../components/QRCode';
+
 
 function TablePreview({table, onDelete, onUpdate}) {
     return ( 
