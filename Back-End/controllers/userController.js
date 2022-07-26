@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const bcrypt = require('bcrypt')
+const hash = require('../middlwares/hash')
 
 const userController = {
     getUser : async (req, res) => {
@@ -9,8 +9,7 @@ const userController = {
     postUser: async (req, res) => {
         console.log("body",req.body);
             const {firstname, lastname, mail, password, passwordConfirm} = req.body
-            const saltRounds = 10;
-            let passwordHash = await bcrypt.hash(password, saltRounds)
+            let passwordHash = hash(password)
 
             if (!firstname || !lastname || !mail || !password || !passwordConfirm) {
 
@@ -41,9 +40,7 @@ const userController = {
             const id = req.params.id
             const {firstname, lastname, mail, password} = req.body
             
-            const saltRounds = 10;
-
-            let passwordHash = await bcrypt.hash(password, saltRounds)
+            let passwordHash = hash(password)
 
             const updatedUser = await User.findByIdAndUpdate(id, {
                 firstname,

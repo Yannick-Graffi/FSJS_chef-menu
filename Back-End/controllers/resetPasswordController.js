@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { findByIdAndUpdate } = require('../models/User');
+const User = require('../models/User');
+// const hash = require('../middlwares/hash')
 const jwt_secret = process.env.JWT_SECRET;
 
 const readToken = (req) => {
@@ -11,7 +14,6 @@ const readToken = (req) => {
     let splitted = authorization.split(" ")
     let token = splitted[1]
     if (token) {
-        console.log(token);
         return token
     } else {
         return null
@@ -21,7 +23,6 @@ const readToken = (req) => {
 const ResetPasswordController = {
     postNewPassword: async (req, res) => {
         let token = readToken(req)
-
         if (token === null) {
             return res
             .status(401)
@@ -30,12 +31,42 @@ const ResetPasswordController = {
 
         jwt.verify(token, jwt_secret, (err, decodedToken) => {
             if (err) {
-                console.log("err");
-                return res  
-                    .status(401)
-                    .send("Token erroné")
+                
+                if (err.message === "jwt expired") {
+                    console.log(err.message);
+                    return res
+                        .status(401)
+                        .send({message:"Lien expiré. Merci de renouveller votre demande"})
+                } else {
+                    return err  
+                        .status(401)
+                        .send({message:err.message})
+                }
+
             } else {
-                console.log("c'est ok");
+                let id = decodedToken._id
+                return User
+                    .findOne({_id: id})
+                    .then(async (user) =>{
+                        if (user.mail !== req.body.mail) {
+                            return res
+                                .status(401)
+                                .send({success:false, message:"utilisateur inconnu, vérifiez votre adresse mail"})
+                        } else {
+                            console.log(token);
+                            const {newPassword} = req.body
+
+                            const saltRounds = 10;
+                            let newPasswordHash = await bcrypt.hash(newPassword, saltRounds)
+                            console.log("id = ", id, "password hashed = ", newPasswordHash);
+                            await User.findByIdAndUpdate({_id:id}, {
+                                password:newPasswordHash,
+                            },{
+                                new:true
+                            })
+                            res.send({message:'Mot de passe réinitisalisé'})
+                        }
+                    })
             }
         })
     }
