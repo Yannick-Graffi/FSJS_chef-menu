@@ -33,7 +33,7 @@ function ResetPassword() {
             await axios
                 .post('http://localhost:3002/reset', formData, config)
                 .then(res => {
-                    setMessage(res.data.message)
+                    console.log(res);
                     navigate('../../connexion')
                 })
                 .catch(err => {
