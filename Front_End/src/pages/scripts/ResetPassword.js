@@ -34,7 +34,7 @@ function ResetPassword() {
                 .post('http://localhost:3002/reset', formData, config)
                 .then(res => {
                     console.log(res);
-                    navigate('../../connexion')
+                    navigate('/')
                 })
                 .catch(err => {
                     setMessage(err.response.data.message)

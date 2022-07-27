@@ -9,6 +9,7 @@ import ForgotPassword from './pages/scripts/ForgotPassword';
 import Restaurants from './pages/scripts/Restaurant';
 import ResetPassword from './pages/scripts/ResetPassword';
 import Formule from './pages/scripts/Formule';
+import Dashboard from './pages/scripts/Dashboard';
 
 //Les Routes sont encore à faire, quand je les fait elles ne fonctionnent pas, je fait juste un appel pour le fonctionnement et mon organisation 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/formules" element={<Formule/>}></Route>
           {/* <Route path="/restaurant/:id" element={<Restaurant/>}></Route>
           <Route path="/restaurant/:name" element={<Restaurant/>}></Route> */}
+          <Route path="/dashboard/:id" element={<Dashboard/>}></Route>
           <Route path='/reset/:id' element={<ResetPassword/>}></Route>
         </Routes> 
         </BrowserRouter>
