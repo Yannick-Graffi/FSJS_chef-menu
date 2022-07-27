@@ -9,6 +9,7 @@ import { Routes, Route, BrowserRouter} from 'react-router-dom';
 import ForgotPassword from './pages/scripts/ForgotPassword';
 import Restaurants from './pages/scripts/Restaurant';
 import ResetPassword from './pages/scripts/ResetPassword';
+import Formule from './pages/scripts/Formule';
 
 //Les Routes sont encore à faire, quand je les fait elles ne fonctionnent pas, je fait juste un appel pour le fonctionnement et mon organisation 
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/table" element={<Table/>}/>
           <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>
           <Route path="/restaurants" element={<Restaurants/>}></Route>
+          <Route path="/formules" element={<Formule/>}></Route>
           {/* <Route path="/restaurant/:id" element={<Restaurant/>}></Route>
           <Route path="/restaurant/:name" element={<Restaurant/>}></Route> */}
           <Route path='/reset/:id' element={<ResetPassword/>}></Route>
