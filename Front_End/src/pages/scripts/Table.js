@@ -73,11 +73,10 @@ function Table(restaurant) {
         await axios
         .post(`http://localhost:3002/table/`, table, config)
         .then(res => {
-            setMessage("")
-            console.log("response = ", res.data);
+            setMessage(res.data.message)
         })
         .catch(err=> {
-            console.log(err)
+            setMessage(err.response.data.message)
         })
     }
 

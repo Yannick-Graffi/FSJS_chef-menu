@@ -64,7 +64,7 @@ function Dashboard() {
     const handleSubmit = (e) => {
         e.preventDefault()
         axios 
-            .put(`http://localhost:3002/restaurant/${id}`, config)
+            .put(`http://localhost:3002/restaurant/${id}`, formData, config)
             .then(res => {
                 setMessage(res.data.message)
                 setIsUpdate(false)
@@ -106,7 +106,7 @@ function Dashboard() {
                     />                    
                 ))]
                 }  
-
+                {message}
                 <div className="buttons">
                     {!isUpdate ? <button onClick={handleUpdate}>Mettre à jour</button> : <button onClick={handleUpdate}>Annuler</button>}
                     <button onClick={showMenu}>Voir la carte</button>
