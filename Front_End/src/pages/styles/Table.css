@@ -9,3 +9,14 @@
     padding: 15px;
     width: 500px;
   }
+
+.table-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-title button {
+  width: 200px;
+  margin: 0 0 0 20px;
+  padding:0;
+}

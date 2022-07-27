@@ -43,7 +43,11 @@ function Dashboard() {
     }, [])
 
     const handleUpdate = () => {
-        setIsUpdate(true)
+        if (isUpdate) {
+            setIsUpdate(false)
+        } else {
+            setIsUpdate(true)
+        }
     }
 
     const handleChange = (e) => {
@@ -83,11 +87,11 @@ function Dashboard() {
             })
     }
 
-
-
     return (  
         <div>
-            <Navbar />
+            <Navbar 
+                id2={id}
+            />
             <div className="infoResto">
 
                 {isUpdate 
@@ -104,19 +108,13 @@ function Dashboard() {
                 }  
 
                 <div className="buttons">
-                    <button onClick={handleUpdate}>Mettre à jour</button>
+                    {!isUpdate ? <button onClick={handleUpdate}>Mettre à jour</button> : <button onClick={handleUpdate}>Annuler</button>}
                     <button onClick={showTables}>Voir la carte</button>
                     <button onClick={handleDelete}>Supprimer</button>
                 </div>
             </div>
             <div className="tables">
-                <div>
-                    <h1>Tables</h1>
-                    <button>Ajouter une table</button>
-                </div>
-
                 <Table />
-
             </div>
             <div className="orders">
                 <h1>Commandes</h1>

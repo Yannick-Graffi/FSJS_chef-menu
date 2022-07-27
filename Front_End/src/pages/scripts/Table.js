@@ -9,27 +9,29 @@ function Table() {
     const [table, setTable] = useState({
         number:""
     });
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState("");
+    const [display, setDisplay] = useState(false);
 
+    let accesToken = localStorage.getItem('token');
+    let config = {
+        headers: {'Authorization' : `Bearer ${accesToken}`}
+    };
 
-    // const [display, setDisplay] = useState(false);
-    // const [formData, setFormData] = useState({
-    //     number: "",
-
-    // })
-
-    useEffect( () => {
-        console.log("Je teste la fonction dans table");
-        let accesToken = localStorage.getItem('token')
+    useEffect( () => { 
+        // récupération du token et envoi dans l'entête de la requête
+        let accesToken = localStorage.getItem('token');
         let config = {
             headers: {'Authorization' : `Bearer ${accesToken}`}
-        }
+        };
+
+        //requête pour récupérer les tables enregistré par le restaurateur pour 
+        //le restaurant sur lequel il est connecté. 
+
         async function getTable(){
             await axios
                 .get("http://localhost:3002/table", config)
                 .then(res => {
-                    console.log(res.data);
-                    const tableAsc = [...res.data].sort((a, b) => a.number - b.number);
+                    const tableAsc = [...res.data].sort((a, b) => a.number > b.number); //Tri pour afficher les tables dans l'ordre croissant 
                     setTables(tableAsc)
                 })
                 .catch(err => {
@@ -39,21 +41,35 @@ function Table() {
         getTable()
     }, [])
 
+    //Suppression de la table en fonction de l'id de celle-ci récupérée 
+    //depuis le component TablePreview
+
     async function handleDelete(id){
-        await axios.delete(`http://localhost:3002/table/${id}`)
+        console.log("coucou id = ", id);
+        await axios
+            .delete(`http://localhost:3002/table/${id}`, config)
+            .then(res => {
+                setMessage(res.data)
+            })
+            .catch(err => {
+                console.log("handleDelete err", err.response);
+            })
+    }
 
+    // Récupération de la saisie du restaurateur puis création de la 
+    // table et enregistrement dans la DB 
 
-        const filteredTables = tables.filter(table => table._id !== id)
-
-         setTables(filteredTables)
+    function handleChange(e) {
+        e.preventDefault();
+        setTable({
+            number:e.target.value
+        })
+        console.log("table dans change = ",table );
     }
 
     async function handleSubmit(e) {
         e.preventDefault()
-        let accesToken = localStorage.getItem('token')
-        let config = {
-            headers: {'Authorization' : `Bearer ${accesToken}`}
-        }
+
         await axios
         .post(`http://localhost:3002/table/`, table, config)
         .then(res => {
@@ -65,38 +81,31 @@ function Table() {
         })
     }
 
-    // function displayUpdate(id) {
-    //     if (display) {
-    //         setDisplay(false)
-    //     } else {
-    //         const result = tables.find(table => table._id === id)
-    //         setTable(result)
-    //         setFormData(result)
+    // fonction permettant d'afficher ou non le formulaire 
+    // pour ajouter une table
 
-    //         setDisplay(true)
-    //     }
-    // }
-
-    function handleChange(e) {
-        e.preventDefault();
-        setTable({
-            number:e.target.value
-        })
+    const addTable = () => {
+        if (display) {
+            setDisplay(false)
+        } else {
+            setDisplay(true)
+        }
     }
-
-
 
     return (
 
-        <h2>chef-sMenu</h2>,
-
        <div className="publish-container">
-            <h2>Bienvenue sur votre page table</h2>
-            <p>Ici, vous pourrez ajouter une table</p>
-            <NewTableForm
-                onSubmit={handleSubmit}
-                onChange={handleChange}
-            />
+            <div className='table-title'>
+                <h1>Tables</h1>
+                {!display ? <button onClick={addTable} >Ajouter une table</button> : <button onClick={addTable}>Annuler</button>}
+            </div>
+
+            {display 
+            &&  <NewTableForm
+                    onSubmit={handleSubmit}
+                    onChange={handleChange}
+                    bouton='Ajouter une table'
+                />}
             <span style={{color:"#ff0000"}}>{message}</span>
             <div>
                 {[tables.map(
@@ -105,7 +114,6 @@ function Table() {
                             key={table.number}
                             table={table}
                             onDelete={handleDelete}
-                            //onUpdate={displayUpdate}
                         />
                     )
                 )]}

@@ -1,6 +1,6 @@
 import '../NewTableForm/NewTableForm.css';
 
-function NewTableForm({onChange, onSubmit}) {
+function NewTableForm({onChange, onSubmit, bouton}) {
 
     //fonction generate qr code
  
@@ -12,8 +12,7 @@ function NewTableForm({onChange, onSubmit}) {
             <label>Table :</label>
                 <input type="text" onChange={onChange} placeholder="Numéro de la table"/>
                                
-                <button className='Add'>Ajouter une table</button>
-
+                <button className='Add'>{bouton}</button>
 
             </form>
         </div>

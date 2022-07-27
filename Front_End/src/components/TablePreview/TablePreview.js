@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
+import UpdateTableForm from '../UpdateTableForm'
 import './TablePreview.css';
 // import QRCode from '../components/QRCode';
 
-
 function TablePreview({table, onDelete, onUpdate}) {
-    console.log("Table !", table);
+    const [isUpdate, setIsUpdate] = useState(false)
+
+    const handleUpdate = () => {
+        if (isUpdate) {
+            setIsUpdate(false)
+        } else {
+            setIsUpdate(true)
+        }
+    }
+    
     return ( 
         <div className='Table'>
             
-            <h2>{table.number}</h2>
-            {/* <h5>{QRCode}</h5> */}
-            <button onClick={() => onDelete(table._id)}>Supprimer</button>
-            <button onClick={() => onUpdate(table._id)}>Mettre à jour</button>
-        </div>
+            {!isUpdate 
+            ? <div>
+                <h2>Table {table.number}</h2>
+                {/* <h5>{QRCode}</h5> */}
+                <button onClick={() => onDelete(table._id)}>Supprimer</button>
+                <button onClick={handleUpdate}>Modifier</button>
+              </div>
+            
+            : <UpdateTableForm
+                tableID={table}
+                bouton="Valider"
+                onSubmit={() => onUpdate(table._id)}    
+            />
+            }
 
-  
+        </div>
 
      );
 }
