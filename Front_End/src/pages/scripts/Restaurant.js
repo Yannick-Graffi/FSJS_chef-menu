@@ -137,7 +137,7 @@ function Restaurant() {
 
                 {[restaurants.map((restaurant, index) => (
                         <RestaurantPreview 
-                            key={restaurant._id}
+                            key={index}
                             restaurant={restaurant}
                             onClick={handleClick}
                             // onDelete={handleDelete}

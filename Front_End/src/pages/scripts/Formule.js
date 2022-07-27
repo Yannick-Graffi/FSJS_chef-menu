@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Formule.css';
 import axios from 'axios';
-import FormulePreview from '../components/FormulePreview/FormulePreview';
-import NewFormuleForm from '../components/NewFormuleForm/NewFormuleForm';
+import FormulePreview from '../../components/FormulePreview/FormulePreview';
+import NewFormuleForm from '../../components/NewFormuleForm/NewFormuleForm';
 
 function Formule() {
     const [formules,setFormules] = useState([]);
@@ -100,7 +100,7 @@ function Formule() {
                 (table) => (
                     <FormulePreview
                         key={formule._id}
-                        formule={tformules}
+                        formule={formules}
                         onDelete={handleDelete}
                         //onUpdate={displayUpdate}
                     />

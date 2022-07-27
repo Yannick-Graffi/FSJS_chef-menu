@@ -2,15 +2,18 @@ const Restaurant = require('../models/Restaurant')
 
 const RestoController = {
     getResto : async (req, res) => {
-        try {
             const resto = await Restaurant.find({ownerId:req.user._id})
             res.status(200).send(resto)
-        } catch (err) {
-            console.error(err.message);
-        }
+
+    },
+    getOneResto : async (req, res) => {
+        const id = req.params.id
+            const resto = await Restaurant.find({_id :id})
+            // console.log(resto);
+            return res.status(200).send({success:true,message:"Informations récupérées",data:resto})
+
     },
     postResto : async (req, res) =>{
-        try {
             const {name, adress, zipCode, city, openingHours, closingHours} = req.body
             const resto = new Restaurant({
                 name,
@@ -23,31 +26,19 @@ const RestoController = {
             })
             await resto.save()
             res.status(201).send({message:"Restaurant correctly created", data:resto})
-        } catch (err) {
-            console.error(err.message);
-        }
     },
     updateResto : async(req, res) => {
-        try {
             const id = req.params.id
             const updatedResto = await Restaurant.findOne({id:req.user._id})
             // const updatedResto = await Restaurant.findByIdAndUpdate(id, req.body, {
             //     new:true,
             // })
             res.status(200).send({message:"Restaurant correctly updated", data:updatedResto})
-
-        } catch (err) {
-            console.error(err.message);
-        }
     },
     deleteResto : async(req,res) => {
-        try {
             const id = req.params.id
             await Restaurant.findByIdAndDelete(id)
             res.status(200).send("Restaurant correctly removed")
-        } catch (err) {
-            console.error(err.message);
-        }
     }
 }
 

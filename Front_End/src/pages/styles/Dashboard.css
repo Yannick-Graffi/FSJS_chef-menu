@@ -1,0 +1,11 @@
+.infoResto {
+    display: flex;
+    justify-content: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 250px;
+}

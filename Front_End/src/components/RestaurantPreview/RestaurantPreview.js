@@ -11,7 +11,6 @@ function RestaurantPreview({restaurant, onClick}) {
             <p>
                 {`Horaires:\n ${restaurant.openingHours} - ${restaurant.closingHours}`}
             </p>
-            {/* <button onClick={() => onDelete(restaurant._id)}>Supprimer</button> */}
             <button onClick={() => onClick(restaurant)}>Gérer</button>
         </div>
 
