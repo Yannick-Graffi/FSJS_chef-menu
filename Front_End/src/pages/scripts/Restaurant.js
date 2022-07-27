@@ -20,6 +20,7 @@ function Restaurant() {
         closingHours: "",
     })
 
+
     // const [display, setDisplay] = useState(false);
     let navigate = useNavigate()
     let accesToken = localStorage.getItem('token')
@@ -69,7 +70,6 @@ function Restaurant() {
     }
 
     const handleClick = (resto) => {
-        console.log("Wahouuu, voici l'resto : ",resto._id);
         navigate(`/dashboard/${resto._id}`)
     }    
 
