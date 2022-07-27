@@ -3,9 +3,11 @@ import '../styles/Restaurant.css';
 import axios from 'axios';
 import NewRestaurantForm from '../../components/NewRestaurantForm/NewRestaurantForm';
 import RestaurantPreview from '../../components/RestaurantPreview/RestaurantPreview';
+import Navbar from '../../components/Navbar';
+import { useNavigate } from 'react-router-dom';
 // import UpdateForm from '../components/UpdateForm/UpdateForm'
 
-function Publication() {
+function Restaurant() {
     const [restaurants,setRestaurants] = useState([]);
     // const [restaurant, setRestaurant] = useState({});
     const [message, setMessage] = useState("")
@@ -19,7 +21,7 @@ function Publication() {
     })
 
     // const [display, setDisplay] = useState(false);
-
+    let navigate = useNavigate()
     let accesToken = localStorage.getItem('token')
     let config = {
         headers: {'Authorization' : `Bearer ${accesToken}`}
@@ -67,7 +69,8 @@ function Publication() {
     }
 
     const handleClick = (resto) => {
-        console.log("Wahouuu, voici l'resto : ",resto);
+        console.log("Wahouuu, voici l'resto : ",resto._id);
+        navigate(`/dashboard/${resto._id}`)
     }    
 
     async function handleSubmit(e) {
@@ -122,28 +125,29 @@ function Publication() {
     //             onSubmit={handleUpdateSubmit}   
     //         />   
     //    </div>
+        <div>
+            <div className="publish-container">
+                <h2>Bienvenue sur votre page restaurant</h2>
+                <p>Ici, vous pourrez ajouter, modifier ou supprimer vos restaurants</p>
+                <NewRestaurantForm
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                />
+                <p>{message}</p>  
 
-       <div className="publish-container">
-            <h2>Bienvenue sur votre page restaurant</h2>
-            <p>Ici, vous pourrez ajouter, modifier ou supprimer vos restaurants</p>
-            <NewRestaurantForm
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-            />
-            <p>{message}</p>  
-
-            {[restaurants.map((restaurant, index) => (
-                    <RestaurantPreview 
-                        key={restaurant._id}
-                        restaurant={restaurant}
-                        onClick={handleClick}
-                        // onDelete={handleDelete}
-                        // onUpdate={displayUpdate}
-                    />                    
-                )
-            )]}
+                {[restaurants.map((restaurant, index) => (
+                        <RestaurantPreview 
+                            key={restaurant._id}
+                            restaurant={restaurant}
+                            onClick={handleClick}
+                            // onDelete={handleDelete}
+                            // onUpdate={displayUpdate}
+                        />                    
+                    )
+                )]}
+            </div>
         </div>
     );
 }
 
-export default Publication;
+export default Restaurant;
