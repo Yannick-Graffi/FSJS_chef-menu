@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './Restaurant.css';
+import '../styles/Restaurant.css';
 import axios from 'axios';
-import NewRestaurantForm from '../components/NewRestaurantForm/NewRestaurantForm';
-import RestaurantPreview from '../components/RestaurantPreview/RestaurantPreview';
+import NewRestaurantForm from '../../components/NewRestaurantForm/NewRestaurantForm';
+import RestaurantPreview from '../../components/RestaurantPreview/RestaurantPreview';
 // import UpdateForm from '../components/UpdateForm/UpdateForm'
 
 function Publication() {

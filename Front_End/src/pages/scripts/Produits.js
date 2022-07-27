@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Produits.css';
 import axios from 'axios';
-import ProduitsForm from '../components/ProduitsForm/NewProduitsForm';
-import FormuleForm from '../components/FormuleForm/FormuleForm';
-import ProduitsPreview from '../components/ProduitsPreview/ProduitsPreview';
+import ProduitsForm from '../../components/ProduitsForm/NewProduitsForm';
+import FormuleForm from '../../components/FormuleForm/FormuleForm';
+import ProduitsPreview from '../../components/ProduitsPreview/ProduitsPreview';
 
 function GestionProduits() {
     const [produits,setProduits] = useState([]);
