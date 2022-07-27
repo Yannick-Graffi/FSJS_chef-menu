@@ -110,7 +110,13 @@ function Dashboard() {
                 </div>
             </div>
             <div className="tables">
-                <h1>Tables</h1>
+                <div>
+                    <h1>Tables</h1>
+                    <button>Ajouter une table</button>
+                </div>
+
+                <Table />
+
             </div>
             <div className="orders">
                 <h1>Commandes</h1>

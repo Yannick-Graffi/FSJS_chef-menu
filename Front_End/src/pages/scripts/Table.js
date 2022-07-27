@@ -12,8 +12,6 @@ function Table() {
     const [message, setMessage] = useState("")
 
 
-
-
     // const [display, setDisplay] = useState(false);
     // const [formData, setFormData] = useState({
     //     number: "",
@@ -21,9 +19,22 @@ function Table() {
     // })
 
     useEffect( () => {
+        console.log("Je teste la fonction dans table");
+        let accesToken = localStorage.getItem('token')
+        let config = {
+            headers: {'Authorization' : `Bearer ${accesToken}`}
+        }
         async function getTable(){
-            const result = await axios.get("http://localhost:3002/table")
-            setTables(result.data)
+            await axios
+                .get("http://localhost:3002/table", config)
+                .then(res => {
+                    console.log(res.data);
+                    const tableAsc = [...res.data].sort((a, b) => a.number - b.number);
+                    setTables(tableAsc)
+                })
+                .catch(err => {
+                    console.log(err.response);
+                })
         }
         getTable()
     }, [])
@@ -83,21 +94,22 @@ function Table() {
             <h2>Bienvenue sur votre page table</h2>
             <p>Ici, vous pourrez ajouter une table</p>
             <NewTableForm
-             onSubmit={handleSubmit}
-             onChange={handleChange}
-        />
-        <span style={{color:"#ff0000"}}>{message}</span>
-
-            {[tables.map(
-                (table) => (
-                    <TablePreview
-                        key={table._id}
-                        table={tables}
-                        onDelete={handleDelete}
-                        //onUpdate={displayUpdate}
-                    />
-                )
-            )]}
+                onSubmit={handleSubmit}
+                onChange={handleChange}
+            />
+            <span style={{color:"#ff0000"}}>{message}</span>
+            <div>
+                {[tables.map(
+                    (table) => (
+                        <TablePreview
+                            key={table.number}
+                            table={table}
+                            onDelete={handleDelete}
+                            //onUpdate={displayUpdate}
+                        />
+                    )
+                )]}
+            </div>
         </div>
     );
 }

@@ -4,6 +4,7 @@ import './TablePreview.css';
 
 
 function TablePreview({table, onDelete, onUpdate}) {
+    console.log("Table !", table);
     return ( 
         <div className='Table'>
             
