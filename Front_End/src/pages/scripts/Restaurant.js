@@ -3,13 +3,11 @@ import '../styles/Restaurant.css';
 import axios from 'axios';
 import NewRestaurantForm from '../../components/NewRestaurantForm/NewRestaurantForm';
 import RestaurantPreview from '../../components/RestaurantPreview/RestaurantPreview';
-import Navbar from '../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 // import UpdateForm from '../components/UpdateForm/UpdateForm'
 
 function Restaurant() {
     const [restaurants,setRestaurants] = useState([]);
-    // const [restaurant, setRestaurant] = useState({});
     const [message, setMessage] = useState("")
     const [formData, setFormData] = useState({
         name:"",
@@ -79,6 +77,7 @@ function Restaurant() {
             .post(`http://localhost:3002/restaurant/`, formData, config)
             .then( res =>{
                 console.log(res);
+                setMessage("")
             })
             .catch(err => {
               setMessage(err)  

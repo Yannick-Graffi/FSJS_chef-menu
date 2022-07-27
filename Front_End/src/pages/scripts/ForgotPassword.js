@@ -6,6 +6,7 @@ import {Link, useNavigate} from 'react-router-dom'
 function ForgotPassword() {
     const [mail, setMail] = useState("")
     const [message, setMessage] = useState("")
+    const [isRegistered, setIsRegistered] = useState(true)
 
     const navigate = useNavigate()
 
@@ -20,10 +21,14 @@ function ForgotPassword() {
         })
         .then(res => {
             setMessage(res.data.message)
-            navigate("../connexion")
+            navigate("/")
         })
         .catch(err =>{
-            setMessage(err.response.data)
+            // console.log(err.response.data.message);
+            setMessage(err.response.data.message)
+            if (err.response.data.message == "Aucun compte existant avec cette adresse mail") {
+                setIsRegistered(false)
+            } 
         })
         }
     
@@ -31,7 +36,7 @@ function ForgotPassword() {
     return (  
         <div>
             <h1>Récupération du mot de passe</h1>
-            <Link to={"../connexion"}>Retour</Link>
+            <Link to={"/"}>Retour</Link>
             <form onSubmit={sendMail}>
                 <input 
                     type="email" 
@@ -39,7 +44,8 @@ function ForgotPassword() {
                     placeholder="saisissez votre adresse mail"/>
                 <button>Envoyer</button>
             </form>
-            <p style={{color : "#ff0000"}}>{message}</p>
+            <p style={{color : "#ff0000"}}>{message}</p> 
+            {!isRegistered && <Link to="/Register" style={{marginRight:"10px"}}>Cliquez ici pour créer un compte</Link>}
         </div>
     );
 }
