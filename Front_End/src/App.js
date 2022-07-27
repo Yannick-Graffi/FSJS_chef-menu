@@ -27,7 +27,7 @@ function App() {
           <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>
           <Route path="/restaurants" element={<Restaurants/>}></Route>
           <Route path="/formules" element={<Formule/>}></Route>
-          <Route paht="/:name/:id" element={<ClientHomepage/>}></Route>
+          <Route path="/:name/:id" element={<ClientHomepage/>}></Route>
           <Route path="/dashboard/:id" element={<Dashboard/>}></Route>
           <Route path='/reset/:id' element={<ResetPassword/>}></Route>
         </Routes> 
