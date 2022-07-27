@@ -11,18 +11,14 @@ const RestoController = {
     },
     postResto : async (req, res) =>{
         try {
-            const {name, adress:{adress, postcode, city}, hours:{opening, closing}} = req.body
+            const {name, adress, zipCode, city, openingHours, closingHours} = req.body
             const resto = new Restaurant({
                 name,
-                adress:{
-                    adress,
-                    postcode,
-                    city,
-                },
-                hours:{
-                    opening,
-                    closing,
-                },
+                adress,
+                zipCode,
+                city,
+                openingHours,
+                closingHours,
                 ownerId:req.user._id
             })
             await resto.save()

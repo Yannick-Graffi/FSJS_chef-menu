@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "./Connexion.css";
+import "../styles/Connexion.css";
 import axios from 'axios'
 import {Link, useNavigate} from 'react-router-dom'
 
@@ -32,7 +32,7 @@ function Connexion() {
       setMessage(response.data.message)
       localStorage.setItem("token", response.data.token)
       console.log("token sauvegardé");
-      navigate('../restaurant')
+      navigate('../restaurants')
       return response
     })
     .catch(err =>{

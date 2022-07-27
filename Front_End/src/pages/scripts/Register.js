@@ -1,6 +1,6 @@
 import React, {useState } from 'react';
 import axios from 'axios';
-import './Register.css';
+import '../styles/Register.css';
 import {useNavigate } from 'react-router-dom';
 
 function Register() {
@@ -14,7 +14,7 @@ function Register() {
     password:"",
     passwordConfirm:"",
   })
-  
+
   const handleChange = (e) => {
     setFormData(
       prevState => (
@@ -40,7 +40,7 @@ function Register() {
         setMessage(err.response.data.message);
       })      
     } else {
-      setMessage("Les mots de passe ne corresponspondent pas")
+      setMessage("Les mots de passe ne correspondent pas")
     }
   }
 

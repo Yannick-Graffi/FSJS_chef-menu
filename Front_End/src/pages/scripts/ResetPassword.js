@@ -8,7 +8,6 @@ function ResetPassword() {
 
     const [message, setMessage] = useState("")
     const [formData, setFormData] = useState({
-        token:`${accesToken}`,
         mail:"",
         newPassword:"",
         confirmPassword:"",
@@ -31,15 +30,14 @@ function ResetPassword() {
             headers: {'Authorization' : `Bearer ${accesToken}`}
         }
         if (formData.newPassword === formData.confirmPassword) {
-            console.log("mdp ok");
             await axios
                 .post('http://localhost:3002/reset', formData, config)
                 .then(res => {
-                    setMessage(res.data.message)
+                    console.log(res);
                     navigate('../../connexion')
                 })
                 .catch(err => {
-                    // setMessage(err.response.data.message)
+                    setMessage(err.response.data.message)
                 })
         } else {
             setMessage("Les mots de passe ne corresponspondent pas")

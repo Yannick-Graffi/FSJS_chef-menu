@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import './Table.css';
+import '../styles/Table.css';
 import axios from 'axios';
+<<<<<<< HEAD:Front_End/src/pages/Table.js
 import TablePreview from '../components/TablePreview/TablePreview';
 import NewTableForm from '../components/NewTableForm/NewTableForm';
+=======
+import TablePreview from '../../components/TablePreview/TablePreview';
+import NewTableForm from '../../components/NewTableForm/NewTableForm';
+// import QRCode from '../components/QRCode';
+>>>>>>> fef0b635b6b999004bcfad270120cfaab638c880:Front_End/src/pages/scripts/Table.js
 
 function Table() {
     const [tables,setTables] = useState([]);

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 
 function ForgotPassword() {
-
     const [mail, setMail] = useState("")
     const [message, setMessage] = useState("")
+
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         setMail(e.target.value)
@@ -18,12 +19,11 @@ function ForgotPassword() {
             mail
         })
         .then(res => {
-            console.log("token, es-tu là ?",res.data);
-            localStorage.setItem("resetPasswordToken", res.data.token)
             setMessage(res.data.message)
+            navigate("../connexion")
         })
         .catch(err =>{
-            setMessage(err.response.data.message)
+            setMessage(err.response.data)
         })
         }
     
@@ -36,7 +36,7 @@ function ForgotPassword() {
                 <input 
                     type="email" 
                     onChange={handleChange}
-                    placeholder="saiissez votre adresse mail"/>
+                    placeholder="saisissez votre adresse mail"/>
                 <button>Envoyer</button>
             </form>
             <p style={{color : "#ff0000"}}>{message}</p>

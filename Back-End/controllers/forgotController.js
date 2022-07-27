@@ -1,8 +1,7 @@
 const User = require("../models/User");
-const jwt = require('jsonwebtoken')
-const jwt_secret = process.env.JWT_SECRET
+const jwt = require('jsonwebtoken');
+const jwt_secret = process.env.JWT_SECRET;
 const nodemailer = require('nodemailer');
-const { token } = require("morgan");
 
 const forgotController = {
     postMail : async (req, res) => {
@@ -25,11 +24,12 @@ const forgotController = {
                     jwt.sign(
                         {_id: user._id, reset:true},
                         jwt_secret,
-                        { expiresIn: "1h"},
+                        { expiresIn: "10m"},
                         (err, token) => {
                             if (err) {
                                 console.log(err);
                             }
+
                             res.status(200).send({
                                 token: token,
                                 success: true,
@@ -48,8 +48,8 @@ const forgotController = {
                                 subject:'Lien de récupération du mot de passe',
                                 text:
                                     'Vous recevez ce message car vous (ou quelqu\'un d\'autre) avez demandé la réinitialisation de votre mot de passe. \n \n'
-                                    + 'Cliquez sur ce lien, ou collez-le dans votre navigateur. Vous avez 1h pour compléter la procédure : \n \n'
-                                    + `http://localhost:3000/reset/${token}`
+                                    + 'Cliquez sur ce lien, ou collez-le dans votre navigateur. Vous avez 10 minutes pour compléter la procédure : \n \n'
+                                    + `http://localhost:3000/reset/${token}\n\n`
                                     + 'Si vous n\'êtes pas à l\'origine de cette demande, merci d\'ignorer ce message, votre mot de passe sera inchangé'
                             };
         
