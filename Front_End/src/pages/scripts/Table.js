@@ -3,8 +3,10 @@ import '../styles/Table.css';
 import axios from 'axios';
 import TablePreview from '../components/TablePreview/TablePreview';
 import NewTableForm from '../components/NewTableForm/NewTableForm';
+import QRCode from 'react-qr-code';
 
 function Table() {
+    const [print , setPrint] = useState();
     const [tables,setTables] = useState([]);
     const [table, setTable] = useState({
         number:""
@@ -73,6 +75,16 @@ function Table() {
         })
     }
 
+    function handlePrint(e) {
+        e.preventDefault();
+        setPrint ({
+            QRCode:e.target.value
+        })
+        `http://localhost:3000/${restaurant}/${number}`
+        print={QRCode}
+    }
+        
+
 
 
     return (
@@ -93,8 +105,10 @@ function Table() {
                     <TablePreview
                         key={table._id}
                         table={tables}
+                        
                         onDelete={handleDelete}
-                        //onUpdate={displayUpdate}
+                        onUpdate={displayUpdate}
+                        onPrint={handlePrint}
                     />
                 )
             )]}
