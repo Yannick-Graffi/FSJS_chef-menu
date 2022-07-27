@@ -29,8 +29,8 @@ function Dashboard() {
     }
 
     useEffect(() => {
-        const getResto = async() => {
-            await axios
+        const getResto = () => {
+            axios
                 .get(`http://localhost:3002/restaurant/${id}`, config)
                 .then(res => {
                     setRestaurant(res.data.data)
@@ -61,9 +61,9 @@ function Dashboard() {
         )
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        await axios 
+        axios 
             .put(`http://localhost:3002/restaurant/${id}`, config)
             .then(res => {
                 setMessage(res.data.message)
@@ -71,12 +71,12 @@ function Dashboard() {
             })
     }
 
-    const showTables = async () => {
+    const showMenu = () => {
 
     }
 
-    const handleDelete = async () => {
-        await axios
+    const handleDelete = () => {
+         axios
             .delete(`http://localhost:3002/restaurant/${id}`, config)
             .then( res => {
                 console.log(res.data);
@@ -109,12 +109,14 @@ function Dashboard() {
 
                 <div className="buttons">
                     {!isUpdate ? <button onClick={handleUpdate}>Mettre à jour</button> : <button onClick={handleUpdate}>Annuler</button>}
-                    <button onClick={showTables}>Voir la carte</button>
+                    <button onClick={showMenu}>Voir la carte</button>
                     <button onClick={handleDelete}>Supprimer</button>
                 </div>
             </div>
             <div className="tables">
-                <Table />
+                <Table 
+                    resto={restaurant}
+                />
             </div>
             <div className="orders">
                 <h1>Commandes</h1>

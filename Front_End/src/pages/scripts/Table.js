@@ -4,7 +4,7 @@ import axios from 'axios';
 import TablePreview from '../../components/TablePreview/TablePreview';
 import NewTableForm from '../../components/NewTableForm/NewTableForm';
 
-function Table() {
+function Table(restaurant) {
     const [tables,setTables] = useState([]);
     const [table, setTable] = useState({
         number:""
@@ -113,6 +113,7 @@ function Table() {
                         <TablePreview
                             key={table.number}
                             table={table}
+                            restaurant={restaurant}
                             onDelete={handleDelete}
                         />
                     )
