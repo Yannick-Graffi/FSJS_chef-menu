@@ -14,32 +14,29 @@ function Table({restaurant}) {
     const [message, setMessage] = useState("");
     const [display, setDisplay] = useState(false);
 
+    // récupération du token et envoi dans l'entête de la requête
+
     let accesToken = localStorage.getItem('token');
     let config = {
         headers: {'Authorization' : `Bearer ${accesToken}`}
     };
 
+    //requête pour récupérer les tables enregistré par le restaurateur pour 
+    //le restaurant sur lequel il est connecté. 
+
+    async function getTable(){
+        await axios
+            .get("http://localhost:3002/table", config)
+            .then(res => {
+                const tableAsc = [...res.data].sort((a, b) => a.number > b.number); //Tri pour afficher les tables dans l'ordre croissant 
+                setTables(tableAsc)
+            })
+            .catch(err => {
+                console.log(err.response);
+            })
+    }
+
     useEffect( () => { 
-        // récupération du token et envoi dans l'entête de la requête
-        let accesToken = localStorage.getItem('token');
-        let config = {
-            headers: {'Authorization' : `Bearer ${accesToken}`}
-        };
-
-        //requête pour récupérer les tables enregistré par le restaurateur pour 
-        //le restaurant sur lequel il est connecté. 
-
-        async function getTable(){
-            await axios
-                .get("http://localhost:3002/table", config)
-                .then(res => {
-                    const tableAsc = [...res.data].sort((a, b) => a.number > b.number); //Tri pour afficher les tables dans l'ordre croissant 
-                    setTables(tableAsc)
-                })
-                .catch(err => {
-                    console.log(err.response);
-                })
-        }
         getTable()
     }, [])
 
@@ -52,6 +49,7 @@ function Table({restaurant}) {
             .delete(`http://localhost:3002/table/${id}`, config)
             .then(res => {
                 setMessage(res.data)
+                getTable();
             })
             .catch(err => {
                 console.log("handleDelete err", err.response);
@@ -75,6 +73,8 @@ function Table({restaurant}) {
         .post(`http://localhost:3002/table/`, table, config)
         .then(res => {
             setMessage(res.data.message)
+            getTable();
+            setDisplay(false)
         })
         .catch(err=> {
             setMessage(err.response.data.message)
@@ -115,7 +115,7 @@ function Table({restaurant}) {
                             table={table}
                             restaurant={restaurant}
                             onDelete={handleDelete}
-                        />
+                            getTable={getTable}                        />
                     )
                 )]}
             </div>

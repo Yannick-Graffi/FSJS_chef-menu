@@ -29,23 +29,24 @@ function Dashboard() {
         headers: {'Authorization' : `Bearer ${accesToken}`}
     }
 
+    const getResto = () => {
+        axios
+            .get(`http://localhost:3002/restaurant/${id}`, config)
+            .then(res => {
+                console.log(res.data.data[0].name)
+                let restaurant = res.data.data[0].name
+                let restoNormalize = restaurant.toLowerCase().split(" ").join("-")
+
+                setRestoName(restoNormalize)
+                setRestaurant(res.data.data)
+                setFormData(res.data.data[0])
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     useEffect(() => {
-        const getResto = () => {
-            axios
-                .get(`http://localhost:3002/restaurant/${id}`, config)
-                .then(res => {
-                    console.log(res.data.data[0].name)
-                    let restaurant = res.data.data[0].name
-                    let restoNormalize = restaurant.toLowerCase().split(" ").join("-")
-
-                    setRestoName(restoNormalize)
-                    setRestaurant(res.data.data)
-
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        }
         getResto()
     }, [])
 
@@ -75,6 +76,7 @@ function Dashboard() {
             .then(res => {
                 setMessage(res.data.message)
                 setIsUpdate(false)
+                getResto()
             })
     }
 
@@ -103,8 +105,10 @@ function Dashboard() {
 
                 {isUpdate 
                 ? <NewRestaurantForm
+                restaurant={restaurant}
                     onChange={handleChange}
                     onSubmit={handleSubmit}
+                    bouton="Modifier"
                   /> 
                 : [restaurant.map((resto, index) => (
                     <RestaurantPreview 

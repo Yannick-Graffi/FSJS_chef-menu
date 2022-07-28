@@ -2,8 +2,6 @@ import '../NewTableForm/NewTableForm.css';
 
 function NewTableForm({onChange, onSubmit, bouton}) {
 
-    //fonction generate qr code
- 
     return ( 
 
 

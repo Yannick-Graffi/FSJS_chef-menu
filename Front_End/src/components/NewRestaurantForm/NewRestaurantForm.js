@@ -1,14 +1,17 @@
+import { useEffect } from 'react';
 import './NewRestaurantForm.css';
 
-function NewRestaurantForm ({onChange, onSubmit}) {
- 
+function NewRestaurantForm ({restaurant, onChange, onSubmit, bouton}) {
+ useEffect(()=>{
+    console.log(restaurant);
+ },[])
     return ( 
 
 
         <div className="newone">
             <form onSubmit={onSubmit}>
                 <label>Nom :</label>
-                <input type="text" name="name" onChange={onChange} placeholder="Nom du restaurant"/>
+                <input type="text" name="name" onChange={onChange} defaultValue={restaurant[0].name} placeholder="Nom du restaurant"/>
                 
                 <label>Adresse :</label>
                 <input type="text" name="adress" onChange={onChange} placeholder="Numéro et nom de la rue"/>
@@ -35,7 +38,7 @@ function NewRestaurantForm ({onChange, onSubmit}) {
                         <input type="text" name="closingHours" onChange={onChange} placeholder="Heure de fermeture"/>
                     </div>
                 </div>
-                <button className='Add'>Ajouter un restaurant</button>
+                <button className='Add'>{bouton}</button>
             </form>
         </div>
      );

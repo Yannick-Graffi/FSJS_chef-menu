@@ -1,4 +1,5 @@
 const Restaurant = require('../models/Restaurant')
+const Table = require('../models/Table')
 
 const RestoController = {
     getResto : async (req, res) => {
@@ -29,17 +30,7 @@ const RestoController = {
     },
     updateResto : async(req, res) => {
             const id = req.params.id
-        //     const updatedResto = await Restaurant.findOne({id:req.user._id})
-            const updatedResto = await Restaurant.findByIdAndUpdate(id, {
-                name:"",
-                adress:"",
-                zipCode:"",
-                city:"",
-                openingHours: "",
-                closingHours: "",
-            }, {
-                new:true,
-            })
+            const updatedResto = await Restaurant.findByIdAndUpdate(id, req.body)
             res.status(200).send({message:"Restaurant correctement mis à jour", data:updatedResto})
     },
     deleteResto : async(req,res) => {
