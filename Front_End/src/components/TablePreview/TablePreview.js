@@ -6,11 +6,10 @@ import QRCode from 'qrcode';
 function TablePreview({restaurant, table, onDelete, onUpdate}) {
     const [isUpdate, setIsUpdate] = useState(false)
     const [source, setSource] = useState('')
-
-    let restoName = restaurant.resto[0].name
-    let restoNormalize = restoName.toLowerCase().split(" ").join("-")
     
-    let url = `http://localhost:3000/${restoNormalize}/${table.number}`
+    console.log("resto dans tablepreview",restaurant);
+
+    let url = `http://localhost:3000/${restaurant}/${table.number}`
     
     const handleUpdate = () => {
         if (isUpdate) {

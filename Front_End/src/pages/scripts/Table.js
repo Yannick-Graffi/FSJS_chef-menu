@@ -4,7 +4,8 @@ import axios from 'axios';
 import TablePreview from '../../components/TablePreview/TablePreview';
 import NewTableForm from '../../components/NewTableForm/NewTableForm';
 
-function Table(restaurant) {
+function Table({restaurant}) {
+
     const [tables,setTables] = useState([]);
     const [table, setTable] = useState({
         number:""
@@ -64,7 +65,6 @@ function Table(restaurant) {
         setTable({
             number:e.target.value
         })
-        console.log("table dans change = ",table );
     }
 
     async function handleSubmit(e) {
@@ -110,7 +110,7 @@ function Table(restaurant) {
                 {[tables.map(
                     (table) => (
                         <TablePreview
-                            key={table.number}
+                            key={table._id}
                             table={table}
                             restaurant={restaurant}
                             onDelete={handleDelete}

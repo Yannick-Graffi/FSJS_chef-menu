@@ -9,6 +9,7 @@ import Table from "../scripts/Table"
 
 function Dashboard() {
     const [restaurant, setRestaurant] = useState([])
+    const [restoName, setRestoName] = useState("")
     const [message, setMessage] = useState("")
     const [isUpdate, setIsUpdate] = useState(false)
     const [formData, setFormData] = useState({
@@ -33,7 +34,13 @@ function Dashboard() {
             axios
                 .get(`http://localhost:3002/restaurant/${id}`, config)
                 .then(res => {
+                    console.log(res.data.data[0].name)
+                    let restaurant = res.data.data[0].name
+                    let restoNormalize = restaurant.toLowerCase().split(" ").join("-")
+
+                    setRestoName(restoNormalize)
                     setRestaurant(res.data.data)
+
                 })
                 .catch(err => {
                     console.log(err);
@@ -72,7 +79,7 @@ function Dashboard() {
     }
 
     const showMenu = () => {
-
+        navigate(`/restaurant/${id}/menu`)
     }
 
     const handleDelete = () => {
@@ -115,7 +122,7 @@ function Dashboard() {
             </div>
             <div className="tables">
                 <Table 
-                    resto={restaurant}
+                    restaurant={restoName}
                 />
             </div>
             <div className="orders">

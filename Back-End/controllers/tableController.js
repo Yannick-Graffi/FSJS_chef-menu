@@ -15,7 +15,6 @@ const tableController = {
         }
 
         return Table.findOne({number : number}).then(async tableNumber => {
-            console.log("numero de table saisi = ", number, " // resultat recherche =", tableNumber);
             if (tableNumber !== null){
                 return res 
                     .status(400)
