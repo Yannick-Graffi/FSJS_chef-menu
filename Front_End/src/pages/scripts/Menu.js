@@ -65,6 +65,14 @@ function Menu() {
         }
     }
 
+    const handleDelete = () => {
+
+    }
+
+    const handleUpdate = () => {
+        
+    }
+
     const filterByCategory = (category) => {
         const filteredProduct = products.filter(function (product) {
             return (
@@ -76,6 +84,8 @@ function Menu() {
                 <ProduitsPreview
                     key={index}
                     produit={product}
+                    onDelete={handleDelete}
+                    onUpdate={handleUpdate}
                 />)
         })              
     }
