@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Table.css';
 import axios from 'axios';
-import TablePreview from '../components/TablePreview/TablePreview';
-import NewTableForm from '../components/NewTableForm/NewTableForm';
+import TablePreview from '../../components/TablePreview/TablePreview';
+import NewTableForm from '../../components/NewTableForm/NewTableForm';
 import QRCode from 'react-qr-code';
 
 function Table({restaurant}) {
