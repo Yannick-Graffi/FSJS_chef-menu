@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import UpdateTableForm from '../UpdateTableForm'
 import './TablePreview.css';
 import QRCode from 'qrcode';
 import axios from 'axios';
 import {useReactToPrint} from 'react-to-print';
-import { ComponentToPrint } from './ComponentToPrint';
-import React, { useRef } from 'react';
+// import { ComponentToPrint } from './ComponentToPrint';
 
 
 function TablePreview({restaurant, table, onDelete, getTable}) {
@@ -54,13 +53,13 @@ function TablePreview({restaurant, table, onDelete, getTable}) {
                 // setMessage(err.response.data.message);
             });
     
-            const qrcodePrint = () => {
-                const componentRef = useRef();
-                const handlePrint = useReactToPrint ({
-                  content: () => componentRef.current,
-                });
-            }
-
+            // const qrcodePrint = () => {
+            //     const componentRef = useRef();
+            //     const handlePrint = useReactToPrint ({
+            //       content: () => componentRef.current,
+            //     });
+            // }
+        }
 
     useEffect(()=>{
         QRCode.toDataURL(url).then((data) => {
@@ -78,10 +77,10 @@ function TablePreview({restaurant, table, onDelete, getTable}) {
                 <button onClick={() => onDelete(table._id)}>Supprimer</button>
                 <button onClick={handleUpdate}>Modifier</button>
                 
-                    <div>
+                    {/* <div>
             <ComponentToPrint ref={componentRef} />
             <button onClick={handlePrint}>Imprimer le QR Code</button>
-                    </div>
+                    </div> */}
               </div>
             
             : <UpdateTableForm
@@ -97,4 +96,4 @@ function TablePreview({restaurant, table, onDelete, getTable}) {
      );
 }
 
-export default TablePreview;
+export default TablePreview

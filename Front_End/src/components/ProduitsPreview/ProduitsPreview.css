@@ -1,0 +1,16 @@
+.produits {
+    display:inline-flex;
+    flex-direction: column ;
+    max-width: 400px;
+    margin-left: 40px;
+    margin-top: 10px;
+    border:2px solid white;
+    border-radius: 10px;
+    background-color:rgb(237, 229, 220);
+}
+button {
+    width:50%;
+    align-self: center;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}

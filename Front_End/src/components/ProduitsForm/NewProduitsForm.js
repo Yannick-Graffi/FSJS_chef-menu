@@ -1,6 +1,6 @@
-import './ProduitsForm.css';
+import './NewProduitsForm.css';
 
-function ProduitsForm({onChangeT, onChangeD, onChangeS, onSubmit}) {
+function ProduitsForm({onChange, onSubmit}) {
  
     return ( 
 
@@ -8,20 +8,20 @@ function ProduitsForm({onChangeT, onChangeD, onChangeS, onSubmit}) {
         <div className="newproduit">
             <form onSubmit={onSubmit}>
                 <label>Nom :</label>
-                <input type="text" onChange={onChangeT} placeholder="Nom du produit"/>
+                <input name="name" type="text" onChange={onChange} placeholder="Nom du produit"/>
                 <label>Catégorie :</label>
-                <select onChange={onChangeD}>
-  <option selected value="entrée">Entrées</option>
-  <option value="plat">Plats</option>
-  <option value="dessert">Desserts</option>
-  <option value="boisson">Boissons</option>
+
+                <select name="category" onChange={onChange}>
+                    <option value="starters">Entrées</option>
+                    <option value="mainCourses">Plats</option>
+                    <option value="desserts">Desserts</option>
+                    <option value="drinks">Boissons</option>
                 </select>
+
                 <label>Prix HT :</label>
-                <input type="text" onChange={onChangeS} placeholder="Prix HT"/>
-                <label>TVA :</label>
-                <input type="text" onChange={onChangeS} placeholder="TVA"/>
-                
-                <button className='Add'>Ajouter le produit à la base de données</button>
+                <input name="HT" type="number" onChange={onChange} placeholder="Prix HT"/>
+    
+                <button className='Add'>Ajouter le produit</button>
             </form>
         </div>
      );

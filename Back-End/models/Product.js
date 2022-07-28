@@ -1,24 +1,15 @@
 const mongoose = require('mongoose')
 
 const ProductSchema = mongoose.Schema({
-    name:{
-        type: String,
-    },
+    restaurantId:String,
+    name:String,
     category:{
         type: String,
-        enum:["Entrées", "Plats", "Desserts", "Boissons"]
+        // enum:["Entrées", "Plats", "Desserts", "Boissons"]
     },
-    price:{
-        HT:{
-            type: Number,
-        },
-        TVA:{
-            type: Number,
-        },
-        TTC:{
-            type: Number,
-        },
-    },
+    HT:Number,
+    TVA:Number,
+    TTC:Number,
 })
 
 const Product = mongoose.model('product', ProductSchema)

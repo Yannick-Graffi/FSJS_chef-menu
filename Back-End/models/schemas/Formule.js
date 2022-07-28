@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const MenuSchema = mongoose.Schema({
+const FormuleSchema = mongoose.Schema({
     starters:[],
     mainCourses:[],
     desserts:[],
@@ -10,4 +10,4 @@ const MenuSchema = mongoose.Schema({
     }
 })
 
-module.exports = MenuSchema
+module.exports = FormuleSchema
