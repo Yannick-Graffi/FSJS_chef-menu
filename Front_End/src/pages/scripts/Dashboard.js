@@ -9,6 +9,7 @@ import Table from "../scripts/Table"
 
 function Dashboard() {
     const [restaurant, setRestaurant] = useState([])
+    const [restoName, setRestoName] = useState("")
     const [message, setMessage] = useState("")
     const [isUpdate, setIsUpdate] = useState(false)
     const [formData, setFormData] = useState({
@@ -29,11 +30,17 @@ function Dashboard() {
     }
 
     useEffect(() => {
-        const getResto = async() => {
-            await axios
+        const getResto = () => {
+            axios
                 .get(`http://localhost:3002/restaurant/${id}`, config)
                 .then(res => {
+                    console.log(res.data.data[0].name)
+                    let restaurant = res.data.data[0].name
+                    let restoNormalize = restaurant.toLowerCase().split(" ").join("-")
+
+                    setRestoName(restoNormalize)
                     setRestaurant(res.data.data)
+
                 })
                 .catch(err => {
                     console.log(err);
@@ -43,7 +50,11 @@ function Dashboard() {
     }, [])
 
     const handleUpdate = () => {
-        setIsUpdate(true)
+        if (isUpdate) {
+            setIsUpdate(false)
+        } else {
+            setIsUpdate(true)
+        }
     }
 
     const handleChange = (e) => {
@@ -57,22 +68,22 @@ function Dashboard() {
         )
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        await axios 
-            .put(`http://localhost:3002/restaurant/${id}`, config)
+        axios 
+            .put(`http://localhost:3002/restaurant/${id}`, formData, config)
             .then(res => {
                 setMessage(res.data.message)
                 setIsUpdate(false)
             })
     }
 
-    const showTables = async () => {
-
+    const showMenu = () => {
+        navigate(`/restaurant/${id}/menu`)
     }
 
-    const handleDelete = async () => {
-        await axios
+    const handleDelete = () => {
+         axios
             .delete(`http://localhost:3002/restaurant/${id}`, config)
             .then( res => {
                 console.log(res.data);
@@ -83,11 +94,11 @@ function Dashboard() {
             })
     }
 
-
-
     return (  
         <div>
-            <Navbar />
+            <Navbar 
+                id2={id}
+            />
             <div className="infoResto">
 
                 {isUpdate 
@@ -102,15 +113,17 @@ function Dashboard() {
                     />                    
                 ))]
                 }  
-
+                {message}
                 <div className="buttons">
-                    <button onClick={handleUpdate}>Mettre à jour</button>
-                    <button onClick={showTables}>Voir la carte</button>
+                    {!isUpdate ? <button onClick={handleUpdate}>Mettre à jour</button> : <button onClick={handleUpdate}>Annuler</button>}
+                    <button onClick={showMenu}>Voir la carte</button>
                     <button onClick={handleDelete}>Supprimer</button>
                 </div>
             </div>
             <div className="tables">
-                <h1>Tables</h1>
+                <Table 
+                    restaurant={restoName}
+                />
             </div>
             <div className="orders">
                 <h1>Commandes</h1>

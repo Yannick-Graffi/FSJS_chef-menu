@@ -15,7 +15,6 @@ const tableController = {
         }
 
         return Table.findOne({number : number}).then(async tableNumber => {
-            console.log("numero de table saisi = ", number, " // resultat recherche =", tableNumber);
             if (tableNumber !== null){
                 return res 
                     .status(400)
@@ -37,16 +36,16 @@ const tableController = {
     updateTable : async(req, res) => {
             const id = req.params.id
             console.log(req.body);
-            const updatedTable = await Table.findByIdAndUpdate(id, req.body, {
+            const updatedTable = await Table.findByIdAndUpdate(id, {number:req.body.number}, {
                 new:true,
             })
-            res.send({message:'Table correctly updated', data:updatedTable})
+            res.send({message:'Table correctement modifiée', data:updatedTable})
     },
     deleteTable : async(req,res) => {
         try {
             const id = req.params.id
             await Table.findByIdAndDelete(id)
-            res.status(200).send("Table correctly removed")
+            res.status(200).send("Table correctement supprimée")
         } catch (err) {
             console.error(err.message);
         }

@@ -5,68 +5,61 @@ import TablePreview from '../components/TablePreview/TablePreview';
 import NewTableForm from '../components/NewTableForm/NewTableForm';
 import QRCode from 'react-qr-code';
 
-function Table() {
-    const [print , setPrint] = useState();
+function Table({restaurant}) {
+
     const [tables,setTables] = useState([]);
     const [table, setTable] = useState({
         number:""
     });
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState("");
+    const [display, setDisplay] = useState(false);
 
+    let accesToken = localStorage.getItem('token');
+    let config = {
+        headers: {'Authorization' : `Bearer ${accesToken}`}
+    };
 
+    useEffect( () => { 
+        // récupération du token et envoi dans l'entête de la requête
+        let accesToken = localStorage.getItem('token');
+        let config = {
+            headers: {'Authorization' : `Bearer ${accesToken}`}
+        };
 
+        //requête pour récupérer les tables enregistré par le restaurateur pour 
+        //le restaurant sur lequel il est connecté. 
 
-    // const [display, setDisplay] = useState(false);
-    // const [formData, setFormData] = useState({
-    //     number: "",
-
-    // })
-
-    useEffect( () => {
         async function getTable(){
-            const result = await axios.get("http://localhost:3002/table")
-            setTables(result.data)
+            await axios
+                .get("http://localhost:3002/table", config)
+                .then(res => {
+                    const tableAsc = [...res.data].sort((a, b) => a.number > b.number); //Tri pour afficher les tables dans l'ordre croissant 
+                    setTables(tableAsc)
+                })
+                .catch(err => {
+                    console.log(err.response);
+                })
         }
         getTable()
     }, [])
 
+    //Suppression de la table en fonction de l'id de celle-ci récupérée 
+    //depuis le component TablePreview
+
     async function handleDelete(id){
-        await axios.delete(`http://localhost:3002/table/${id}`)
-
-
-        const filteredTables = tables.filter(table => table._id !== id)
-
-         setTables(filteredTables)
-    }
-
-    async function handleSubmit(e) {
-        e.preventDefault()
-        let accesToken = localStorage.getItem('token')
-        let config = {
-            headers: {'Authorization' : `Bearer ${accesToken}`}
-        }
+        console.log("coucou id = ", id);
         await axios
-        .post(`http://localhost:3002/table/`, table, config)
-        .then(res => {
-            setMessage("")
-            console.log("response = ", res.data);
-        })
-        .catch(err=> {
-            console.log(err)
-        })
+            .delete(`http://localhost:3002/table/${id}`, config)
+            .then(res => {
+                setMessage(res.data)
+            })
+            .catch(err => {
+                console.log("handleDelete err", err.response);
+            })
     }
 
-    // function displayUpdate(id) {
-    //     if (display) {
-    //         setDisplay(false)
-    //     } else {
-    //         const result = tables.find(table => table._id === id)
-    //         setTable(result)
-    //         setFormData(result)
-
-    //         setDisplay(true)
-    //     }
-    // }
+    // Récupération de la saisie du restaurateur puis création de la 
+    // table et enregistrement dans la DB 
 
     function handleChange(e) {
         e.preventDefault();
@@ -75,43 +68,57 @@ function Table() {
         })
     }
 
-    function handlePrint(e) {
-        e.preventDefault();
-        setPrint ({
-            QRCode:e.target.value
+    async function handleSubmit(e) {
+        e.preventDefault()
+
+        await axios
+        .post(`http://localhost:3002/table/`, table, config)
+        .then(res => {
+            setMessage(res.data.message)
         })
-        `http://localhost:3000/${restaurant}/${number}`
-        print={QRCode}
+        .catch(err=> {
+            setMessage(err.response.data.message)
+        })
     }
-        
 
+    // fonction permettant d'afficher ou non le formulaire 
+    // pour ajouter une table
 
+    const addTable = () => {
+        if (display) {
+            setDisplay(false)
+        } else {
+            setDisplay(true)
+        }
+    }
 
     return (
 
-        <h2>chef-sMenu</h2>,
-
        <div className="publish-container">
-            <h2>Bienvenue sur votre page table</h2>
-            <p>Ici, vous pourrez ajouter une table</p>
-            <NewTableForm
-             onSubmit={handleSubmit}
-             onChange={handleChange}
-        />
-        <span style={{color:"#ff0000"}}>{message}</span>
+            <div className='table-title'>
+                <h1>Tables</h1>
+                {!display ? <button onClick={addTable} >Ajouter une table</button> : <button onClick={addTable}>Annuler</button>}
+            </div>
 
-            {[tables.map(
-                (table) => (
-                    <TablePreview
-                        key={table._id}
-                        table={tables}
-                        
-                        onDelete={handleDelete}
-                        onUpdate={displayUpdate}
-                        onPrint={handlePrint}
-                    />
-                )
-            )]}
+            {display 
+            &&  <NewTableForm
+                    onSubmit={handleSubmit}
+                    onChange={handleChange}
+                    bouton='Ajouter une table'
+                />}
+            <span style={{color:"#ff0000"}}>{message}</span>
+            <div>
+                {[tables.map(
+                    (table) => (
+                        <TablePreview
+                            key={table._id}
+                            table={table}
+                            restaurant={restaurant}
+                            onDelete={handleDelete}
+                        />
+                    )
+                )]}
+            </div>
         </div>
     );
 }

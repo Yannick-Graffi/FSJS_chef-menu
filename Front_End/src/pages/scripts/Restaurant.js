@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function Restaurant() {
     const [restaurants,setRestaurants] = useState([]);
     const [message, setMessage] = useState("")
+    const [display, setDisplay] = useState(false)
     const [formData, setFormData] = useState({
         name:"",
         adress:"",
@@ -18,8 +19,6 @@ function Restaurant() {
         closingHours: "",
     })
 
-
-    // const [display, setDisplay] = useState(false);
     let navigate = useNavigate()
     let accesToken = localStorage.getItem('token')
     let config = {
@@ -46,15 +45,6 @@ function Restaurant() {
         }
         getRestaurant()
     }, [])
-
-    // async function handleDelete(id){
-    //     await axios.delete(`http://localhost:3002/restaurant/${id}`, config)
-
- 
-    //     const filteredRestaurants = restaurants.filter(lodge => lodge._id !== id)
-
-    //     setRestaurants(filteredRestaurants)
-    // }
 
     function handleChange(e) {
         setFormData(
@@ -84,63 +74,47 @@ function Restaurant() {
             })
     }
 
-    // function displayUpdate(id) {
-    //     if (display) {
-    //         setDisplay(false)
-    //     } else {
-    //         const result = restaurants.find(restaurant => restaurant._id === id)
-    //         setRestaurant(result) 
-    //         setFormData(result)
+    const addResto = () =>{
+        if (display) {
+            setDisplay(false)
+        } else {
+            setDisplay(true)
+        }
+    }
 
-    //         setDisplay(true)
-    //     }
-    // }
-
-    // function handleUpdateChange(e) {
-    //     setFormData(
-    //         prevState => (
-    //             {
-    //                 ...prevState,
-    //                 [e.target.name]:e.target.value
-    //             }
-    //         )
-    //     )    
-    // }
-
-    // async function handleUpdateSubmit(e) {
-    //     e.preventDefault()
-    //     setDisplay(false)
-    //     const result = await axios.put(`http://localhost:3002/restaurants/${formData._id}`, formData)
-    // }
-
+    const toDeconnect = () => {
+        navigate("/")
+        localStorage.setItem("token", "")
+    }
+    
     return (
   
-    //    <div>
-    //         <p>Entrez vos modifications :</p>
-    //         <UpdateForm 
-    //             restaurant={restaurant}
-    //             formData={formData}
-    //             onChange={handleUpdateChange}
-    //             onSubmit={handleUpdateSubmit}   
-    //         />   
-    //    </div>
         <div>
+            <nav className="navbar" >
+                <div className="Title">
+                    <h2>Chef Menu</h2>
+                </div>
+                 <a href="#" onClick={toDeconnect}>Se déconnecter</a>
+            </nav>
+            
             <div className="publish-container">
                 <h2>Bienvenue sur votre page restaurant</h2>
-                <p>Ici, vous pourrez ajouter, modifier ou supprimer vos restaurants</p>
-                <NewRestaurantForm
-                    onChange={handleChange}
-                    onSubmit={handleSubmit}
-                />
-                <p>{message}</p>  
+                {!display ? <button onClick={addResto}>Ajouter un restaurant</button> : <button onClick={addResto}>Annuler</button>}
+                {/* <p>Ici, vous pourrez ajouter, modifier ou supprimer vos restaurants</p> */}
+                {display 
+                &&  <NewRestaurantForm
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
+                    />
+                }
+                    
+                <p>{message}</p>
 
                 {[restaurants.map((restaurant, index) => (
                         <RestaurantPreview 
                             key={index}
                             restaurant={restaurant}
                             onClick={handleClick}
-                            // onDelete={handleDelete}
-                            // onUpdate={displayUpdate}
                         />                    
                     )
                 )]}
