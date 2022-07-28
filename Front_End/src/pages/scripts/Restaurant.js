@@ -25,24 +25,20 @@ function Restaurant() {
         headers: {'Authorization' : `Bearer ${accesToken}`}
     }
 
+    async function getRestaurant(){
+        await axios
+            .get("http://localhost:3002/restaurant", config)
+            .then(res => {
+                console.log("log après GET",res.data, "type des res.data = ", typeof res.data);
+                setRestaurants(res.data)
+            })
+            .catch(err => {
+                console.log(err.response);
+            })
+
+    }
+
     useEffect( () => {
-        let accesToken = localStorage.getItem('token')
-        let config = {
-            headers: {'Authorization' : `Bearer ${accesToken}`}
-        }
-
-        async function getRestaurant(){
-                await axios
-                    .get("http://localhost:3002/restaurant", config)
-                    .then(res => {
-                        console.log("log après GET",res.data, "type des res.data = ", typeof res.data);
-                        setRestaurants(res.data)
-                    })
-                    .catch(err => {
-                        console.log(err.response);
-                    })
-
-        }
         getRestaurant()
     }, [])
 
@@ -68,6 +64,8 @@ function Restaurant() {
             .then( res =>{
                 console.log(res);
                 setMessage("")
+                getRestaurant();
+                setDisplay(false);
             })
             .catch(err => {
               setMessage(err)  
@@ -105,6 +103,7 @@ function Restaurant() {
                 &&  <NewRestaurantForm
                         onChange={handleChange}
                         onSubmit={handleSubmit}
+                        bouton="Ajouter un restaurant"
                     />
                 }
                     
