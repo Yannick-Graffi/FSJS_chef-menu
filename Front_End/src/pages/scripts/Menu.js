@@ -65,12 +65,15 @@ function Menu() {
         }
     }
 
-    const handleDelete = () => {
-
-    }
-
-    const handleUpdate = () => {
-        
+    const handleDelete = (id) => {
+        console.log("handleDelete id = ",id);
+        axios
+            .delete(`http://localhost:3002/product/${id}`, config)
+            .then(res => {
+                getProduct()
+                console.log(res.data);
+            })
+            .catch(err => console.log(err))
     }
 
     const filterByCategory = (category) => {
@@ -85,7 +88,7 @@ function Menu() {
                     key={index}
                     produit={product}
                     onDelete={handleDelete}
-                    onUpdate={handleUpdate}
+                    getProduct={getProduct}
                 />)
         })              
     }

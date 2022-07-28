@@ -11,5 +11,4 @@ function NewTableForm({bouton, onSubmit, onChange}) {
         </div>
      );
 }
-
 export default NewTableForm;

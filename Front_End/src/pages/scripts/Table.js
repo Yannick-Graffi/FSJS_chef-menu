@@ -3,7 +3,6 @@ import '../styles/Table.css';
 import axios from 'axios';
 import TablePreview from '../../components/TablePreview/TablePreview';
 import NewTableForm from '../../components/NewTableForm/NewTableForm';
-import QRCode from 'react-qr-code';
 
 function Table({restaurant}) {
 
@@ -43,9 +42,8 @@ function Table({restaurant}) {
     //Suppression de la table en fonction de l'id de celle-ci récupérée 
     //depuis le component TablePreview
 
-    async function handleDelete(id){
-        console.log("coucou id = ", id);
-        await axios
+    function handleDelete(id){
+        axios
             .delete(`http://localhost:3002/table/${id}`, config)
             .then(res => {
                 setMessage(res.data)

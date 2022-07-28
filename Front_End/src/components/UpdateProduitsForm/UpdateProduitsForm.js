@@ -1,9 +1,8 @@
-import './NewProduitsForm.css';
+import './UpdateProduitsForm.css';
 
-function ProduitsForm({onChange, onSubmit}) {
+function ProduitsForm({bouton, onChange, onSubmit}) {
  
     return ( 
-
         <div className="newproduit">
             <form onSubmit={onSubmit}>
                 <label>Nom :</label>
@@ -20,7 +19,7 @@ function ProduitsForm({onChange, onSubmit}) {
                 <label>Prix HT :</label>
                 <input name="HT" type="number" onChange={onChange} placeholder="Prix HT"/>
     
-                <button className='Add'>Ajouter le produit</button>
+                <button className='Add'>{bouton}</button>
             </form>
         </div>
      );

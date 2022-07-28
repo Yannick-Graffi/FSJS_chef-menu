@@ -26,34 +26,29 @@ const productController = {
         res.status(201).send({message:"Product correctly created", data:product})
     },
     updateProduct: async (req, res) => {
-        try {
-            const id = req.params.id
-            const {name, category, price:{HT, TVA}} = req.body
-            const TTC = JSON.parse(HT) * (1+ JSON.parse(TVA))
-            const updatedProduct = await Product.findByIdAndUpdate(id, {
-                name,
-                category,
-                price:{
-                    HT,
-                    TVA,
-                    TTC
-                }
-            }, {
-                new:true,
-            })
-            res.status(200).send({message:"Product correctly updated", data:updatedProduct})
-        } catch (err) {
-            console.error(err.message);
-        }
+        const {name, category, HT} = req.body
+        const id = req.params.id
+        const TVA = 0.1; 
+        const TTC = parseFloat(JSON.parse(HT) * (1+ JSON.parse(TVA))).toFixed(1)
+        console.log(TTC);
+    
+        const updatedProduct = await Product.findByIdAndUpdate(id, {
+            name,
+            category,
+            HT,
+            TVA,
+            TTC,
+        }, {
+            new:true
+        })
+        console.log(updatedProduct);
+        res.status(200).send({message:"Product correctly updated"})
     },
     deleteProduct: async (req, res) => {
-        try {
             const id = req.params.id
             await Product.findByIdAndDelete(id)
             res.status(200).send("Product correctly removed")
-        } catch (err) {
-            console.error(err.message);
-        }
+
     }
 }
 
