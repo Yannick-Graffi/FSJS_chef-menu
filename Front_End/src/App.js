@@ -10,8 +10,9 @@ import Restaurants from './pages/scripts/Restaurant';
 import ResetPassword from './pages/scripts/ResetPassword';
 import Formule from './pages/scripts/Formule';
 import Dashboard from './pages/scripts/Dashboard';
-import ClientHomepage from './pages/scripts/ClientHomepage';
+// import ClientHomepage from './pages/scripts/ClientHomepage';
 import Menu from './pages/scripts/Menu';
+import CarteClient from './pages/scripts/CarteClient'
 
 //Les Routes sont encore à faire, quand je les fait elles ne fonctionnent pas, je fait juste un appel pour le fonctionnement et mon organisation 
 
@@ -29,7 +30,7 @@ function App() {
           <Route path="/restaurants" element={<Restaurants/>}></Route>
           <Route path="/restaurant/:id/menu" element={<Menu/>}></Route>
           <Route path="/formules" element={<Formule/>}></Route>
-          <Route path="/:name/:id" element={<ClientHomepage/>}></Route>
+          <Route path="/:name/:id" element={<CarteClient/>}></Route>
           <Route path="/dashboard/:id" element={<Dashboard/>}></Route>
           <Route path='/reset/:id' element={<ResetPassword/>}></Route>
         </Routes> 
