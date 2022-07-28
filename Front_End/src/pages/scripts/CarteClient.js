@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/CarteClient.css';
-import CarteClientPreview from '../CarteClientPreview/CarteClientPreview';
-import CarteClientForm from '../CarteClientForm/CarteClientForm'
+import CarteClientPreview from '../../components/CarteClientPreview/CarteClientPreview';
+import CarteClientForm from '../../components/CarteClientForm/CarteClientForm'
 import axios from 'axios';
 
 function Carte() {
     const [formules, setFormules] = useState({})
-    const [entrées, setEntrées] = useState({})
-    const [plats, setPlats] = useState({})
-    const [desserts, setDesserts] = useState({})
-    const [boissons, setBoissons] = useState({})
+    // const [entrées, setEntrées] = useState({})
+    // const [plats, setPlats] = useState({})
+    // const [desserts, setDesserts] = useState({})
+    // const [boissons, setBoissons] = useState({})
     
 
 
@@ -54,11 +54,11 @@ function Carte() {
         <h2>chef-sMenu</h2>,
 
        <div className="publish-container">
-            <h2>Bienvenue sur la page du restaurant ${restaurant}</h2>
+            <h2>Bienvenue sur la page du restaurant test</h2>
             <p>Ici, vous pouvez passer votre commande</p>
-            <CarteClientForm
-             onSubmit={handleSubmit}
-             onChange={handleChange}
+            <CarteClientPreview
+            //  onSubmit={handleSubmit}
+            //  onChange={handleChange}
         />
         <span style={{color:"#ff0000"}}>{message}</span>
 

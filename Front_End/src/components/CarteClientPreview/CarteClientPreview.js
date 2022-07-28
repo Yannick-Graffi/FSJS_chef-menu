@@ -1,12 +1,14 @@
-import react from react
+import react from 'react'
 
-function CarteClientPreview(
+function CarteClientPreview(){
 
     
-)
 
-return 
 
+return (
+<div>
 <h1>salut</h1>
-
+</div>
+)
+}
 export default CarteClientPreview;
