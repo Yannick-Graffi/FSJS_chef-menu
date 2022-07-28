@@ -1,18 +1,21 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, forwardRef } from 'react';
 import UpdateTableForm from '../UpdateTableForm'
 import './TablePreview.css';
 import QRCode from 'qrcode';
 import axios from 'axios';
-import {useReactToPrint} from 'react-to-print';
-// import { ComponentToPrint } from './ComponentToPrint';
+import ReactToPrint, {PrintContextConsumer} from 'react-to-print';
 
+const ComponentToPrint = forwardRef((props, ref) => {
+    console.log(ref)
+    // return <div ref={ref}>hello world</div>;
+  });
 
 function TablePreview({restaurant, table, onDelete, getTable}) {
     const [isUpdate, setIsUpdate] = useState(false)
     const [source, setSource] = useState('')
     const [tableNum, setTableNum] = useState({number:""})
     const [message, setMessage] = useState("")
-
+    const ref = useRef();
     
 
     let id = table._id
@@ -51,15 +54,9 @@ function TablePreview({restaurant, table, onDelete, getTable}) {
             })
             .catch(err => {
                 // setMessage(err.response.data.message);
-            });
-    
-            // const qrcodePrint = () => {
-            //     const componentRef = useRef();
-            //     const handlePrint = useReactToPrint ({
-            //       content: () => componentRef.current,
-            //     });
-            // }
+            });               
         }
+
 
     useEffect(()=>{
         QRCode.toDataURL(url).then((data) => {
@@ -73,14 +70,24 @@ function TablePreview({restaurant, table, onDelete, getTable}) {
             {!isUpdate 
             ? <div>
                 <h2>Table {table.number}</h2>
-                <img src={source} />
+                <img src={source} ref={ref} />
+                
                 <button onClick={() => onDelete(table._id)}>Supprimer</button>
                 <button onClick={handleUpdate}>Modifier</button>
                 
-                    {/* <div>
-            <ComponentToPrint ref={componentRef} />
+                     
+            
+                     <div>
+      <ReactToPrint content={() => ref.current}>
+        <PrintContextConsumer>
+          {({ handlePrint }) => (
             <button onClick={handlePrint}>Imprimer le QR Code</button>
-                    </div> */}
+          )}
+        </PrintContextConsumer>
+      </ReactToPrint>
+      <ComponentToPrint ref={ref} />
+                    </div>
+                     
               </div>
             
             : <UpdateTableForm
