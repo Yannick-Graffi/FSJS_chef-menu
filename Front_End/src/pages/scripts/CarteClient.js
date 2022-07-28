@@ -6,10 +6,10 @@ import axios from 'axios';
 
 function Carte() {
     const [formules, setFormules] = useState([])
-     const [entrées, setEntrées] = useState({})
-     const [plats, setPlats] = useState({})
-    // const [desserts, setDesserts] = useState({})
-    // const [boissons, setBoissons] = useState({})
+    const [entrees, setEntrees] = useState([])
+    const [plats, setPlats] = useState([])
+    const [desserts, setDesserts] = useState([])
+    const [boissons, setBoissons] = useState([])
     
 
 
@@ -30,11 +30,11 @@ function Carte() {
     }, [])
 
     useEffect( () => {
-        async function getEntrées(){
-            const result = await axios.get("http://localhost:3002/entrées")
-            setEntrées(result.data)
+        async function getEntrees(){
+            const result = await axios.get("http://localhost:3002/entrees")
+            setEntrees(result.data)
         }
-        getEntrées()
+        getEntrees()
     }, [])
 
     useEffect( () => {
@@ -87,7 +87,7 @@ function Carte() {
 
        <div className="publish-container">
             <h2>Bienvenue sur la page du restaurant test</h2>
-            <p>Ici, vous pouvez passer votre commande</p>
+            <h3>Ici, vous pouvez passer votre commande</h3>
             
               {/* onSubmit={handleSubmit}
               onChange={handleChange} */}
@@ -105,11 +105,11 @@ function Carte() {
                 )
             )]}
 
-            {[entrées.map(
-                (entrées, index) => (
+            {[entrees.map(
+                (entrees, index) => (
                     <CarteClientPreview
                         key={index}
-                        entrée={entrées}
+                        entree={entrees}
                         // onClick={handleClick}
                         // onUpdate={displayUpdate}
                     />
