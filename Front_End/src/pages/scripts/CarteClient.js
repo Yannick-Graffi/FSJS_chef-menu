@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/CarteClient.css';
 import CarteClientPreview from '../../components/CarteClientPreview/CarteClientPreview';
-import CarteClientForm from '../../components/CarteClientForm/CarteClientForm'
+
 import axios from 'axios';
 
 function Carte() {
-    const [formules, setFormules] = useState({})
-    // const [entrées, setEntrées] = useState({})
-    // const [plats, setPlats] = useState({})
+    const [formules, setFormules] = useState([])
+     const [entrées, setEntrées] = useState({})
+     const [plats, setPlats] = useState({})
     // const [desserts, setDesserts] = useState({})
     // const [boissons, setBoissons] = useState({})
     
@@ -27,6 +27,38 @@ function Carte() {
             setFormules(result.data)
         }
         getFormules()
+    }, [])
+
+    useEffect( () => {
+        async function getEntrées(){
+            const result = await axios.get("http://localhost:3002/entrées")
+            setEntrées(result.data)
+        }
+        getEntrées()
+    }, [])
+
+    useEffect( () => {
+        async function getPlats(){
+            const result = await axios.get("http://localhost:3002/plats")
+            setPlats(result.data)
+        }
+        getPlats()
+    }, [])
+
+    useEffect( () => {
+        async function getDesserts(){
+            const result = await axios.get("http://localhost:3002/desserts")
+            setDesserts(result.data)
+        }
+        getDesserts()
+    }, [])
+
+    useEffect( () => {
+        async function getBoissons(){
+            const result = await axios.get("http://localhost:3002/boissons")
+            setBoissons(result.data)
+        }
+        getBoissons()
     }, [])
 
     
@@ -56,15 +88,15 @@ function Carte() {
        <div className="publish-container">
             <h2>Bienvenue sur la page du restaurant test</h2>
             <p>Ici, vous pouvez passer votre commande</p>
-            <CarteClientPreview
-            //  onSubmit={handleSubmit}
-            //  onChange={handleChange}
-        />
-        <span style={{color:"#ff0000"}}>{message}</span>
+            
+              {/* onSubmit={handleSubmit}
+              onChange={handleChange} */}
+        
+        
 
             {[formules.map(
                 (formules, index) => (
-                    <CarteClientForm
+                    <CarteClientPreview
                         key={index}
                         formule={formules}
                         // onClick={handleClick}
@@ -72,6 +104,52 @@ function Carte() {
                     />
                 )
             )]}
+
+            {[entrées.map(
+                (entrées, index) => (
+                    <CarteClientPreview
+                        key={index}
+                        entrée={entrées}
+                        // onClick={handleClick}
+                        // onUpdate={displayUpdate}
+                    />
+                )
+            )]}
+
+            {[plats.map(
+                (plats, index) => (
+                    <CarteClientPreview
+                        key={index}
+                        plat={plats}
+                        // onClick={handleClick}
+                        // onUpdate={displayUpdate}
+                    />
+                )
+            )]}
+
+            {[desserts.map(
+                (desserts, index) => (
+                    <CarteClientPreview
+                        key={index}
+                        dessert={desserts}
+                        // onClick={handleClick}
+                        // onUpdate={displayUpdate}
+                    />
+                )
+            )]}
+
+            {[boissons.map(
+                (boissons, index) => (
+                    <CarteClientPreview
+                        key={index}
+                        boisson={boissons}
+                        // onClick={handleClick}
+                        // onUpdate={displayUpdate}
+                    />
+                )
+            )]}
+
+
         </div>
     );
 }
