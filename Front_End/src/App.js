@@ -1,14 +1,17 @@
 import React from 'react';
 import './App.css';
-import Register from './pages/Register.js';
-import Connexion from './pages/Connexion.js';
-import Navbar from './components/Navbar.js';
-import Homepage from './pages/Homepage.js';
-import Table from './pages/Table.js';
+import Register from './pages/scripts/Register.js';
+import Connexion from './pages/scripts/Connexion.js';
+// import Homepage from './pages/Homepage.js';
+import Table from './pages/scripts/Table';
 import { Routes, Route, BrowserRouter} from 'react-router-dom';
-import ForgotPassword from './pages/ForgotPassword';
-import Restaurant from './pages/Restaurant';
-import ResetPassword from './pages/ResetPassword';
+import ForgotPassword from './pages/scripts/ForgotPassword';
+import Restaurants from './pages/scripts/Restaurant';
+import ResetPassword from './pages/scripts/ResetPassword';
+import Formule from './pages/scripts/Formule';
+import Dashboard from './pages/scripts/Dashboard';
+import ClientHomepage from './pages/scripts/ClientHomepage';
+import CarteClient from './pages/scripts/CarteClient'
 
 //Les Routes sont encore à faire, quand je les fait elles ne fonctionnent pas, je fait juste un appel pour le fonctionnement et mon organisation 
 
@@ -17,14 +20,16 @@ function App() {
     
     <div className="App">
    <BrowserRouter>
-   <Navbar />
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          {/* <Route path="/" element={<Homepage />} /> */}
           <Route path="/register" element={<Register/>}/>
-          <Route path="/connexion" element={<Connexion/>}/>
+          <Route path="/" element={<Connexion/>}/>
           <Route path="/table" element={<Table/>}/>
           <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>
-          <Route path="/restaurant" element={<Restaurant/>}></Route>
+          <Route path="/restaurants" element={<Restaurants/>}></Route>
+          <Route path="/formules" element={<Formule/>}></Route>
+          <Route path="/:name/:id" element={<CarteClient/>}></Route>
+          <Route path="/dashboard/:id" element={<Dashboard/>}></Route>
           <Route path='/reset/:id' element={<ResetPassword/>}></Route>
         </Routes> 
         </BrowserRouter>

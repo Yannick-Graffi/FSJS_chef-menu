@@ -8,12 +8,13 @@
         background-color: rgb(237, 237, 228);
 }
 label {
-        display:flex;
-        justify-content: center;
         margin: 3px;
 }
 .Add {
         margin:5px;
 }
-        
+       
+.zipCodeCity, .hours {
+        display: flex;
+}
         

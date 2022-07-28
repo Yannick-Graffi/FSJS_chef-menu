@@ -1,6 +1,6 @@
-import './FormuleForm.css';
+import './NewFormuleForm.css';
 
-function FormuleForm({onChangeT, onChangeD, onChangeS, onSubmit}) {
+function NewFormuleForm({onChangeT, onChangeD, onChangeS, onSubmit}) {
  
     return ( 
 
@@ -9,6 +9,9 @@ function FormuleForm({onChangeT, onChangeD, onChangeS, onSubmit}) {
             <form onSubmit={onSubmit}>
                 <label>Nom de la formule:</label>
                 <input type="text" onChange={onChangeT} placeholder="Nom de la formule"/>
+
+                <label>Prix de la formule:</label>
+                <input type="text" onChange={onChangeT} placeholder="Prix de la formule"/>
 
                 <label>Entrées :</label>
                 <select onChange={onChangeD}>
@@ -44,4 +47,4 @@ function FormuleForm({onChangeT, onChangeD, onChangeS, onSubmit}) {
      );
 }
 
-export default FormuleForm;
+export default NewFormuleForm;

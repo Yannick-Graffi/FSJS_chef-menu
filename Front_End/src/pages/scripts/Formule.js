@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import './Table.css';
+import '../styles/Formule.css';
 import axios from 'axios';
-import TablePreview from '../components/TablePreview/TablePreview';
-import NewTableForm from '../components/NewTableForm/NewTableForm';
-// import QRCode from '../components/QRCode';
+import FormulePreview from '../../components/FormulePreview/FormulePreview';
+import NewFormuleForm from '../../components/NewFormuleForm/NewFormuleForm';
 
-function Table() {
-    const [tables,setTables] = useState([]);
-    const [table, setTable] = useState({
-        number:""
+function Formule() {
+    const [formules,setFormules] = useState([]);
+    const [formule, setFormule] = useState({
+        nom:"",
+        prix:"",
+        entrée:"",
+        plat: "",
+        dessert:""
     });
     const [message, setMessage] = useState("")
 
@@ -22,20 +25,20 @@ function Table() {
     // })
 
     useEffect( () => {
-        async function getTable(){
-            const result = await axios.get("http://localhost:3002/table")
-            setTables(result.data)
+        async function getFormule(){
+            const result = await axios.get("http://localhost:3002/formule")
+            setFormules(result.data)
         }
-        getTable()
+        getFormule()
     }, [])
 
     async function handleDelete(id){
-        await axios.delete(`http://localhost:3002/table/${id}`)
+        await axios.delete(`http://localhost:3002/formule/${id}`)
 
 
-        const filteredTables = tables.filter(table => table._id !== id)
+        const filteredFormules = formules.filter(formule => formule._id !== id)
 
-         setTables(filteredTables)
+         setFormules(filteredFormules)
     }
 
     async function handleSubmit(e) {
@@ -45,7 +48,7 @@ function Table() {
             headers: {'Authorization' : `Bearer ${accesToken}`}
         }
         await axios
-        .post(`http://localhost:3002/table/`, table, config)
+        .post(`http://localhost:3002/formule/`, formule, config)
         .then(res => {
             setMessage("")
             console.log("response = ", res.data);
@@ -69,8 +72,12 @@ function Table() {
 
     function handleChange(e) {
         e.preventDefault();
-        setTable({
-            number:e.target.value
+        setFormule({            
+        nom:e.target.value,
+        prix:e.target.value,
+        entrée:e.target.value,
+        plat: e.target.value,
+        dessert:e.target.value
         })
     }
 
@@ -81,19 +88,19 @@ function Table() {
         <h2>chef-sMenu</h2>,
 
        <div className="publish-container">
-            <h2>Bienvenue sur votre page table</h2>
-            <p>Ici, vous pourrez ajouter une table</p>
-            <NewTableForm
+            <h2>Bienvenue sur votre page formule</h2>
+            <p>Ici, vous pourrez ajouter, modifier ou supprimer une formule</p>
+            <NewFormuleForm
              onSubmit={handleSubmit}
              onChange={handleChange}
         />
         <span style={{color:"#ff0000"}}>{message}</span>
 
-            {[tables.map(
+            {[formules.map(
                 (table) => (
-                    <TablePreview
-                        key={table._id}
-                        table={tables}
+                    <FormulePreview
+                        key={formule._id}
+                        formule={formules}
                         onDelete={handleDelete}
                         //onUpdate={displayUpdate}
                     />
@@ -103,6 +110,4 @@ function Table() {
     );
 }
 
-export default Table;
-
-
+export default Formule;

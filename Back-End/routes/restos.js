@@ -4,6 +4,7 @@ const restoController = require('../controllers/restoController')
 const Auth = require('../middlwares/auth')
 
 router.get('/', Auth.isUser, restoController.getResto);
+router.get('/:id', Auth.isUser, restoController.getOneResto);
 router.post('/', Auth.isUser, restoController.postResto);
 router.put('/:id', Auth.isUser, restoController.updateResto);
 router.delete('/:id', Auth.isUser, restoController.deleteResto);
