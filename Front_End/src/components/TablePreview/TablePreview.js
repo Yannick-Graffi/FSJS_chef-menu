@@ -6,7 +6,8 @@ import axios from 'axios';
 import ReactToPrint, {PrintContextConsumer} from 'react-to-print';
 
 const ComponentToPrint = forwardRef((props, ref) => {
-    return <div ref={ref}>hello world</div>;
+    console.log(ref)
+    // return <div ref={ref}>hello world</div>;
   });
 
 function TablePreview({restaurant, table, onDelete, getTable}) {
@@ -69,7 +70,8 @@ function TablePreview({restaurant, table, onDelete, getTable}) {
             {!isUpdate 
             ? <div>
                 <h2>Table {table.number}</h2>
-                <img src={source} />
+                <img src={source} ref={ref} />
+                
                 <button onClick={() => onDelete(table._id)}>Supprimer</button>
                 <button onClick={handleUpdate}>Modifier</button>
                 
