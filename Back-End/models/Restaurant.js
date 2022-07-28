@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const MenuSchema = require('./schemas/Menu')
+const FormuleSchema = require('./schemas/Formule')
 
 const RestaurantSchema = mongoose.Schema({
     ownerId: String,
@@ -9,7 +9,7 @@ const RestaurantSchema = mongoose.Schema({
     city: String,
     openingHours: String,
     closingHours: String,
-    menu: [MenuSchema],
+    menu: [FormuleSchema],
     
 });
 

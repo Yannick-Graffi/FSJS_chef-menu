@@ -19,7 +19,7 @@ function Navbar({id2}) {
 
             <Link to="/restaurants" style={{marginRight:"10px"}}>Restaurants</Link> 
             <Link to={`/dashboard/${id2}`} >Dashboard</Link>
-            <Link to="/carte" style={{marginRight:"10px"}}>Carte</Link>
+            <Link to={`/restaurant/${id2}/menu`} style={{marginRight:"10px"}}>Carte</Link>
             <a href="#" onClick={toDeconnect}>Se déconnecter</a>
         </div>
     </nav>

@@ -39,5 +39,4 @@ app.use('/menu', menuRouter)
 app.use('/forgotPassword', forgotRouter)
 app.use('/reset', resetRouter)
 
-
 module.exports = app;

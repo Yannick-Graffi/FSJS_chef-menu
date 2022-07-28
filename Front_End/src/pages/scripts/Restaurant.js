@@ -25,11 +25,10 @@ function Restaurant() {
         headers: {'Authorization' : `Bearer ${accesToken}`}
     }
 
-    async function getRestaurant(){
-        await axios
+    function getRestaurant(){
+        axios
             .get("http://localhost:3002/restaurant", config)
             .then(res => {
-                console.log("log après GET",res.data, "type des res.data = ", typeof res.data);
                 setRestaurants(res.data)
             })
             .catch(err => {
