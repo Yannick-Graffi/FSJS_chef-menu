@@ -1,0 +1,21 @@
+.carteClient {
+    display: flex;
+}
+
+.category {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ticket{
+        display:inline-flex;
+        flex-direction: column ;
+        max-width: 400px;
+        margin-left: 40px;
+        margin-top: 10px;
+        border:2px solid white;
+        border-radius: 10px;
+        background-color:rgb(237, 229, 220);
+    
+}
+

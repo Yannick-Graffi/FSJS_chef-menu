@@ -31,7 +31,7 @@ function App() {
           <Route path="/restaurants" element={<Restaurants/>}></Route>
           <Route path="/restaurant/:id/menu" element={<Menu/>}></Route>
           <Route path="/formules" element={<Formule/>}></Route>
-          <Route path="/:name/:id" element={<ClientHomepage/>}></Route>
+          <Route path="/:restoID/:id" element={<ClientHomepage/>}></Route>
           <Route path="/dashboard/:id" element={<Dashboard/>}></Route>
           <Route path='/reset/:id' element={<ResetPassword/>}></Route>
         </Routes> 

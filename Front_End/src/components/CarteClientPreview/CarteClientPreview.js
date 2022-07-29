@@ -1,8 +1,17 @@
-import react from 'react'
+import react, { useState } from 'react'
 
-function CarteClientPreview(produit){
+function CarteClientPreview({key, produit}){
+    const [quantity, setQuantity] = useState(0)
 
 console.log(produit);
+
+const handleChange = (e) => {
+    setQuantity(e.target.value)
+}
+
+const handleSubmit = () => {
+
+}
 
 return (
 <div >
@@ -13,19 +22,15 @@ return (
             
             <h4>{produit.name}</h4>
             <h5>Tarifs</h5>
-            <span>HT : {produit.HT} €</span>
-            <span>TVA : {produit.TVA*100} %</span>
             <span>TTC : {produit.TTC} €</span>
-                    
+            <form onSubmit={handleSubmit}>                
+                <input onChange={handleChange} name="increment" type="number" min={0}></input>
+                <button>Ajouter</button>
+            </form>
         </div>
 
     </div>
-    {/* <form onSubmit={onSubmit}>
-    <label>Formules :</label>
-        <input type="text" onChange={onChange} placeholder="quantité"/>           
-        <button className='Add'>{bouton}</button>
 
-    </form> */}
 </div>
 )
 }

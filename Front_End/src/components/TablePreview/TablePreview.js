@@ -4,6 +4,7 @@ import './TablePreview.css';
 import QRCode from 'qrcode';
 import axios from 'axios';
 import ReactToPrint, {PrintContextConsumer} from 'react-to-print';
+import { useParams } from 'react-router-dom';
 
 const ComponentToPrint = forwardRef((props, ref) => {
     console.log(ref)
@@ -17,6 +18,7 @@ function TablePreview({restaurant, table, onDelete, getTable}) {
     const [message, setMessage] = useState("")
     const ref = useRef();
     
+    const {id:restoID} = useParams()
 
     let id = table._id
 
@@ -25,7 +27,7 @@ function TablePreview({restaurant, table, onDelete, getTable}) {
         headers: {'Authorization' : `Bearer ${accesToken}`}
     };
 
-    let url = `http://localhost:3000/${restaurant}/${table.number}`
+    let url = `http://localhost:3000/${restoID}/${table.number}`
     
     const handleUpdate = () => {
         if (isUpdate) {
